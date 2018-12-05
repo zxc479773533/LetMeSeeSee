@@ -11,9 +11,9 @@ Store(Node2, file, func) {
 Store(Node3, line, func) {
   return std::to_string(__LINE__) + __FUNCTION__;
 }
-int main() {
+int main(int argc, char **argv) {
   lmss::Storager storager;
-  storager.ScanSourceCode("../test");
+  storager.ScanSourceCode(argv[1]);
   for (auto &node:storager.GetNodeList()) {
     srlib::println(node);
   }
