@@ -12,7 +12,7 @@ Store(Node3, line, func) {
   return std::to_string(__LINE__) + __FUNCTION__;
 }
 int main() {
-  sono::Storager storager;
+  lmss::Storager storager;
   storager.ScanSourceCode("../test");
   for (auto &node:storager.GetNodeList()) {
     srlib::println(node);

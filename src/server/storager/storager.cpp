@@ -2,7 +2,7 @@
 #include "../utility/file.h"
 #include "../utility/io.h"
 
-namespace sono {
+namespace lmss {
   std::string Storager::Call(const std::string &name) {
     auto &f = reflector::GetInstance()[name];
     if (f) {

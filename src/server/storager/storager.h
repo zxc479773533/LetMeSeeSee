@@ -5,7 +5,7 @@
 #include <vector>
 #include "../utility/singleton.h"
 
-namespace sono {
+namespace lmss {
   
   // 数据储存节点函数类型。
   typedef std::string(*store_t)();
@@ -38,7 +38,7 @@ namespace sono {
 //   return file_name;
 // }
 #define Store(name, ...) std::string name();\
-static auto name##helper = (sono::Storager::Register(#name,name),0);\
+static auto name##helper = (lmss::Storager::Register(#name,name),0);\
 std::string name()
 }
 
