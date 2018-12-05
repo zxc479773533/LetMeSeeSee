@@ -14,7 +14,7 @@ Store(Node3, line, func) {
 int main() {
   sono::Storager storager;
   storager.ScanSourceCode("../test");
-  for (auto &node:storager._node_list){
+  for (auto &node:storager.GetNodeList()) {
     srlib::println(node);
   }
   return 0;
