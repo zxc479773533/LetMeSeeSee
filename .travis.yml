@@ -1,0 +1,9 @@
+language: cpp
+
+install:
+  - cd src && mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ../server
+  - make -j2
+
+script:
+  - ./test_reflector ../server
