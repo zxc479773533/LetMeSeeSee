@@ -1,6 +1,11 @@
+#include <thread>
 #include "storager.h"
 #include "../utility/file.h"
 #include "../utility/io.h"
+#include "../net/listener.h"
+#include "../net/address.h"
+#include "../net/connection.h"
+#include "../net/request.h"
 
 namespace lmss {
   std::string Storager::Call(const std::string &name) {
@@ -36,5 +41,46 @@ namespace lmss {
         }
       }
     });
+  }
+  void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
+    using namespace srlib;
+    std::thread([&ip, port, this]() {
+      net::Listener listener(net::Address(ip, port));
+      while (true) {
+        auto conn = listener.Accept();
+        std::thread([](std::shared_ptr<net::Connection> conn) {
+          auto req = net::RecvHTTPRequest(*conn);
+          // Request NodeList
+          if (req.page.to_lower() == "/nodelist") {
+            srlib::String json;
+            for (auto &j : _node_list) {
+              json += j + "\n";
+            }
+            conn->Write(net::HTTPResponse{}.Version("1.1")
+                                           .StatusCode("200")
+                                           .ReasonPhrase("OK")
+                                           .Content(json)
+                                           .Serialize());
+          } else {
+            // Request Node
+            auto node_name = req.page(req.page.find('/') + 1, req.page.size());
+            auto file_name = Storager::Call(file_name);
+            if (!file_name.empty()) {
+              conn->Write(net::HTTPResponse{}.Version("1.1")
+                                             .StatusCode("200")
+                                             .ReasonPhrase("OK")
+                                             .Content(srlib::OpenFile(file_name).ReadAll())
+                                             .Serialize());
+            } else {
+              conn->Write(net::HTTPResponse{}.Version("1.1")
+                                             .StatusCode("404")
+                                             .ReasonPhrase("Not Found")
+                                             .Content("404 not found")
+                                             .Serialize());
+            }
+          }
+        }).detach();
+      }
+    }).detach();
   }
 }
