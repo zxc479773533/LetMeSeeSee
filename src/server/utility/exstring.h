@@ -5,10 +5,6 @@
 #include <ostream>
 #include <regex>
 
-extern "C" {
-#include "helper.h"
-};
-
 namespace srlib {
   template<typename T>
   struct remove_cvref {
@@ -35,6 +31,7 @@ namespace srlib {
   template<typename CharT>
   class BasicString {
 #define DIFFTYPE_ENABLE template<typename T,typename Valid = typename std::enable_if<!std::is_same<BasicString, typename std::decay<T>::type>::value>::type>
+#define CHAR_ENABLE template<typename Enable = typename std::enable_if<std::is_same<CharT,char>::value>::type>
   private:
     std::basic_string<CharT> _str;
   public:
@@ -230,21 +227,94 @@ namespace srlib {
       if (begin >= end)return BasicString();
       return BasicString(_str.substr(begin, end - begin));
     }
-    inline BasicString trim_left(const BasicString &charset, size_t pos = 0) const {
+    inline BasicString &trim_left(const BasicString &charset, size_t pos) {
+      auto index1 = _str.find_first_not_of(charset._str, pos);
+      if (index1 != std::basic_string<CharT>::npos)
+        _str.erase(0, index1);
+      return *this;
+    }
+    DIFFTYPE_ENABLE inline BasicString &trim_left(T &&charset, size_t pos) {
+      auto index1 = _str.find_first_not_of(charset, pos);
+      if (index1 != std::basic_string<CharT>::npos)
+        _str.erase(0, index1);
+      return *this;
+    }
+    inline BasicString trim_left_copy(const BasicString &charset, size_t pos = 0) const {
       auto index1 = _str.find_first_not_of(charset._str, pos);
       if (index1 == std::basic_string<CharT>::npos)
         return BasicString();
       return operator()(index1, size());
     }
-    inline BasicString trim_right(const BasicString &charset, size_t pos = std::basic_string<CharT>::npos) const {
+    DIFFTYPE_ENABLE inline BasicString trim_left_copy(T &&charset, size_t pos = 0) const {
+      auto index1 = _str.find_first_not_of(charset, pos);
+      if (index1 == std::basic_string<CharT>::npos)
+        return BasicString();
+      return operator()(index1, size());
+    }
+    inline BasicString &trim_right(const BasicString &charset, size_t pos = std::basic_string<CharT>::npos) {
+      auto index2 = _str.find_last_not_of(charset._str, pos);
+      if (index2 == std::basic_string<CharT>::npos)
+        _str.erase(index2 + 1);
+      return *this;
+    }
+    DIFFTYPE_ENABLE inline BasicString &trim_right(T &&charset, size_t pos = std::basic_string<CharT>::npos) {
+      auto index2 = _str.find_last_not_of(charset, pos);
+      if (index2 == std::basic_string<CharT>::npos)
+        _str.erase(index2 + 1);
+      return *this;
+    }
+    inline BasicString trim_right_copy(const BasicString &charset, size_t pos = std::basic_string<CharT>::npos) const {
       auto index2 = _str.find_last_not_of(charset._str, pos);
       if (index2 == std::basic_string<CharT>::npos)
         return BasicString();
       return operator()(0, index2 + 1);
     }
-    inline BasicString trim(const BasicString &charset = "\r\t\n \v",
-                            size_t pos1 = 0,
-                            size_t pos2 = std::basic_string<CharT>::npos) const {
+    DIFFTYPE_ENABLE inline BasicString trim_right_copy(T &&charset, size_t pos = std::basic_string<CharT>::npos) const {
+      auto index2 = _str.find_last_not_of(charset._str, pos);
+      if (index2 == std::basic_string<CharT>::npos)
+        return BasicString();
+      return operator()(0, index2 + 1);
+    }
+    inline BasicString &trim(const char *charset = "\r\t\n \v",
+                             size_t pos1 = 0,
+                             size_t pos2 = std::basic_string<CharT>::npos) {
+      return trim_left(charset, pos1).trim_right(charset, pos2);
+    }
+    inline BasicString &trim(const BasicString &charset,
+                             size_t pos1 = 0,
+                             size_t pos2 = std::basic_string<CharT>::npos) {
+      return trim_left(charset, pos1).trim_right(charset, pos2);
+    }
+    DIFFTYPE_ENABLE inline BasicString &trim(T &&charset,
+                                             size_t pos1 = 0,
+                                             size_t pos2 = std::basic_string<CharT>::npos) {
+      return trim_left(charset, pos1).trim_right(charset, pos2);
+    }
+    inline BasicString trim_copy(const char *charset = "\r\t\n \v",
+                                 size_t pos1 = 0,
+                                 size_t pos2 = std::basic_string<CharT>::npos) const {
+      auto index1 = _str.find_first_not_of(charset, pos1);
+      if (index1 == std::basic_string<CharT>::npos)
+        return BasicString();
+      auto index2 = _str.find_last_not_of(charset, pos2);
+      if (index2 == std::basic_string<CharT>::npos)
+        return BasicString();
+      return operator()(index1, index2 + 1);
+    }
+    inline BasicString trim_copy(const BasicString &charset,
+                                 size_t pos1 = 0,
+                                 size_t pos2 = std::basic_string<CharT>::npos) const {
+      auto index1 = _str.find_first_not_of(charset._str, pos1);
+      if (index1 == std::basic_string<CharT>::npos)
+        return BasicString();
+      auto index2 = _str.find_last_not_of(charset._str, pos2);
+      if (index2 == std::basic_string<CharT>::npos)
+        return BasicString();
+      return operator()(index1, index2 + 1);
+    }
+    DIFFTYPE_ENABLE inline BasicString trim_copy(T &&charset,
+                                                 size_t pos1 = 0,
+                                                 size_t pos2 = std::basic_string<CharT>::npos) const {
       auto index1 = _str.find_first_not_of(charset._str, pos1);
       if (index1 == std::basic_string<CharT>::npos)
         return BasicString();
@@ -259,9 +329,15 @@ namespace srlib {
       }
       return *this;
     }
+    inline BasicString remove_copy(size_t from, size_t to) const {
+      return BasicString(_str).remove(from, to);
+    }
     inline BasicString &pop(size_t size) {
       _str.erase(_str.size() - size, size);
       return *this;
+    }
+    inline BasicString pop_copy(size_t size) const {
+      return BasicString(_str).pop(size);
     }
     std::vector<BasicString> split(const BasicString &deli) const {
       unsigned long i = 0;
@@ -291,7 +367,7 @@ namespace srlib {
       }
       return res;
     }
-    std::vector<BasicString> split(const CharT *deli) const {
+    std::vector<BasicString> split(const char *deli) const {
       unsigned long i = 0;
       unsigned long j = 0;
       std::vector<BasicString> res;
@@ -319,18 +395,18 @@ namespace srlib {
       }
       return res;
     }
-    std::vector<BasicString> filed() const {
+    CHAR_ENABLE std::vector<BasicString> filed() const {
       auto size = _str.size();
       auto cstr = _str.c_str();
       std::vector<BasicString> res;
       unsigned pos = 0;
       unsigned start = 0;
-      while (pos < size && asciispace[cstr[pos]] != 0)pos++;
+      while (pos < size && isspace(cstr[pos]) != 0)pos++;
       start = pos;
       for (; pos < size;) {
-        while (asciispace[cstr[pos]] == 0)pos++;
+        while (isspace(cstr[pos]) == 0)pos++;
         res.push_back(_str.substr(start, pos - start));
-        while (pos < size && asciispace[cstr[pos]] != 0)pos++;
+        while (pos < size && isspace(cstr[pos]) != 0)pos++;
         start = pos;
       }
       return res;
@@ -363,7 +439,7 @@ namespace srlib {
       }
       return res;
     }
-    size_t count(const CharT *sub) const {
+    CHAR_ENABLE size_t count(const char *sub) const {
       size_t res = 0;
       unsigned long pos = 0;
       auto size = strlen(sub);
@@ -391,15 +467,31 @@ namespace srlib {
       }
       return res;
     }
-    BasicString map(std::function<char(char)> &&mapfunc) const {
-      auto res(*this);
+    template<typename MapFunc>
+    BasicString &map(MapFunc &&mapfunc) {
+      for (auto &c:_str) {
+        c = mapfunc(c);
+      }
+      return *this;
+    }
+    template<typename MapFunc>
+    BasicString map_copy(MapFunc &&mapfunc) const {
+      BasicString res(*this);
       for (auto &c:res._str) {
         c = mapfunc(c);
       }
       return res;
     }
-    BasicString to_upper() const {
-      auto res(*this);
+    CHAR_ENABLE BasicString &to_upper() {
+      for (auto &c : _str) {
+        if (islower(c)) {
+          c += 'A' - 'a';
+        }
+      }
+      return *this;
+    }
+    CHAR_ENABLE BasicString to_upper_copy() const {
+      BasicString res(*this);
       for (auto &c : res._str) {
         if (islower(c)) {
           c += 'A' - 'a';
@@ -407,8 +499,16 @@ namespace srlib {
       }
       return res;
     }
-    BasicString to_lower() const {
-      auto res(*this);
+    CHAR_ENABLE BasicString &to_lower() {
+      for (auto &c:_str) {
+        if (isupper(c)) {
+          c += 'a' - 'A';
+        }
+      }
+      return *this;
+    }
+    CHAR_ENABLE BasicString to_lower_copy() const {
+      BasicString res(*this);
       for (auto &c:res._str) {
         if (isupper(c)) {
           c += 'a' - 'A';
@@ -427,7 +527,7 @@ namespace srlib {
       }
       return res;
     }
-    std::vector<BasicString> regex_search(const CharT *str) const {
+    DIFFTYPE_ENABLE std::vector<BasicString> regex_search(T &&str) const {
       std::regex reg(str);
       std::smatch match;
       std::vector<BasicString> res;
@@ -437,30 +537,14 @@ namespace srlib {
         buf = match.suffix();
       }
       return res;
-    }
-    std::vector<BasicString> regex_search(const std::basic_string<CharT> &str) const {
-      std::regex reg(str);
-      std::smatch match;
-      std::vector<BasicString> res;
-      std::basic_string<CharT> buf(_str);
-      while (std::regex_search(buf, match, reg)) {
-        res.emplace_back(BasicString(std::move(match.str())));
-        buf = match.suffix();
-      }
-      return res;
-    }
-    bool regex_match(const CharT *str) const {
-      std::regex reg(str);
-      std::smatch match;
-      return std::regex_match(_str, match, reg);
-    }
-    bool regex_match(const std::basic_string<CharT> &str) const {
-      std::regex reg(str);
-      std::smatch match;
-      return std::regex_match(_str, match, reg);
     }
     bool regex_match(const BasicString &str) const {
       std::regex reg(str.c_str());
+      std::smatch match;
+      return std::regex_match(_str, match, reg);
+    }
+    DIFFTYPE_ENABLE bool regex_match(T &&str) const {
+      std::regex reg(str);
       std::smatch match;
       return std::regex_match(_str, match, reg);
     }
@@ -532,6 +616,7 @@ namespace srlib {
       return res;
     }
 #undef DIFFTYPE_ENABLE
+#undef CHAR_ENABLE
   };
   
   typedef BasicString<char> String;

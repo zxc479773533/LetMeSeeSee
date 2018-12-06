@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <cstring>
 #include <cmath>
-#include "nstr.h"
+#include "exstring.h"
 
 namespace srlib {
   typedef uint8_t Byte;

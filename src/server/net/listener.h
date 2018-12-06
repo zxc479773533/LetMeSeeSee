@@ -2,10 +2,13 @@
 #define UTILITY_LISTENER_H
 
 #include <sys/socket.h>
-#include "utility/file.h"
+#include "../utility/file.h"
 
 namespace srlib {
-  class String;
+  
+  template <typename CharT>
+  class BasicString;
+  typedef BasicString<char> String;
   namespace net {
     class Address;
     

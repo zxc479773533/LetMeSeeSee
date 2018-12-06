@@ -92,29 +92,5 @@ namespace srlib {
       }
       return ::connect(fd(), GetAddress().Sockaddr(), sizeof(sockaddr));
     }
-    UdpConnection::UdpConnection(const srlib::net::Address &addr, bool connect) : Connection(addr,
-                                                                                             ::socket(addr.Family(),
-                                                                                                      SOCK_DGRAM,
-                                                                                                      0),
-                                                                                             connect) {}
-    UdpConnection::UdpConnection(const srlib::String &ip, std::uint16_t port, bool connect) : UdpConnection(Address(ip,
-                                                                                                                    port),
-                                                                                                            connect) {}
-    UdpConnection::UdpConnection(const srlib::String &ip, const srlib::String &port, bool connect) : UdpConnection(
-      Address(ip, port),
-      connect) {}
-    ssize_t UdpConnection::SendTo(const srlib::String &msg, const Address &addr, int flag) {
-      return ::sendto(fd(), msg.c_str(), msg.size(), flag, addr.Sockaddr(), sizeof(sockaddr));
-    }
-    std::pair<String, Address> UdpConnection::RecvFrom(size_t size, int flag) {
-      sockaddr addr{};
-      socklen_t len;
-      auto buf = new char[size];
-      auto count = ::recvfrom(fd(), buf, size, flag, &addr, &len);
-      String res(buf, count);
-      delete buf;
-      return std::make_pair(std::move(res), Address(addr));
-    }
-    int UdpConnection::Bind() {return ::bind(fd(), GetAddress().Sockaddr(), sizeof(sockaddr));}
   }
 }

@@ -48,8 +48,10 @@ namespace lmss {
       net::Listener listener(net::Address(ip, port));
       while (true) {
         auto conn = listener.Accept();
-        std::thread([](std::shared_ptr<net::Connection> conn) {
+        std::thread([this](std::shared_ptr<net::Connection> conn) {
           auto req = net::RecvHTTPRequest(*conn);
+          println(req.Serialize());
+          if (req.version.empty())return;
           // Request NodeList
           if (req.page.to_lower() == "/nodelist") {
             srlib::String json;
@@ -64,12 +66,14 @@ namespace lmss {
           } else {
             // Request Node
             auto node_name = req.page(req.page.find('/') + 1, req.page.size());
-            auto file_name = Storager::Call(file_name);
+            auto file_name = Storager::Call(node_name.std_string());
             if (!file_name.empty()) {
+              auto file = OpenFile(file_name);
               conn->Write(net::HTTPResponse{}.Version("1.1")
                                              .StatusCode("200")
                                              .ReasonPhrase("OK")
-                                             .Content(srlib::OpenFile(file_name).ReadAll())
+                                             .Header("Content-Length", std::to_string(file.Size()))
+                                             .Content(file.ReadAll())
                                              .Serialize());
             } else {
               conn->Write(net::HTTPResponse{}.Version("1.1")
@@ -79,7 +83,7 @@ namespace lmss {
                                              .Serialize());
             }
           }
-        }).detach();
+        }, conn).detach();
       }
     }).detach();
   }

@@ -1,10 +1,13 @@
 #ifndef UTILITY_CONNECTION_H
 #define UTILITY_CONNECTION_H
 
-#include "utility/file.h"
+#include "../utility/file.h"
 
 namespace srlib {
-  class String;
+  
+  template <typename CharT>
+  class BasicString;
+  typedef BasicString<char> String;
   namespace net {
     class Address;
     
@@ -39,18 +42,6 @@ namespace srlib {
       TcpConnection(const Address &addr, bool connect = true);
       TcpConnection(const String &ip, const String &port, bool connect = true);
       TcpConnection(const String &ip, std::uint16_t port, bool connect = true);
-    };
-    
-    class UdpConnection : public Connection {
-    private:
-    public:
-      UdpConnection() = default;
-      UdpConnection(const Address &addr, bool connect = false);
-      UdpConnection(const String &ip, const String &port, bool connect = false);
-      UdpConnection(const String &ip, std::uint16_t port, bool connect = false);
-      int Bind();
-      ssize_t SendTo(const String &msg, const Address &addr, int flag = 0);
-      std::pair<String, Address> RecvFrom(size_t size, int flag = 0);
     };
   }
 }

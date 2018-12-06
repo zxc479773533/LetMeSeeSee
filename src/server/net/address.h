@@ -4,7 +4,9 @@
 #include <cstdint>
 
 namespace srlib {
-  class String;
+  template <typename CharT>
+  class BasicString;
+  typedef BasicString<char> String;
 }
 
 struct sockaddr;

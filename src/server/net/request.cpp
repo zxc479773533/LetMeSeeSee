@@ -1,11 +1,8 @@
-#include <utility/io.h>
+#include "../utility/io.h"
 #include <sys/ioctl.h>
 #include "request.h"
-#include "connector.h"
 #include "connection.h"
 #include "address.h"
-#include "tls_connection.h"
-#include "parse.h"
 
 namespace srlib {
   namespace net {
@@ -67,20 +64,6 @@ namespace srlib {
       }
       return res;
     }
-    String httpGet(const String &url, const String &append, std::uint64_t maxSize) {
-      auto partition = url.find('/');
-      auto domain = partition == std::string::npos ? url : url(0, partition);
-      auto filename = partition == std::string::npos ? "/" : url(partition, url.size());
-      auto conn = Dial(Address(domain, 80));
-      String request = "GET " + filename + " HTTP/1.1\r\n""Host: " + domain +
-                       "\r\n""User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\n"
-                       "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n"
-                       "Connection: keep-alive\r\n" + append + "Accept-Encoding: deflate\r\n\r\n";
-      conn->Write(request);
-      auto res = conn->Read(maxSize);
-      conn->Close();
-      return res;
-    }
     std::pair<String, String> splitUrl(const String &url) {
       auto partition = url.find('/');
       if (partition == std::string::npos) {
@@ -88,33 +71,6 @@ namespace srlib {
       }
       return std::make_pair(url(0, partition), url(partition, url.size()));
     };
-    String httpsGet(const String &url, const std::vector<String> &append) {
-      auto[domain, filename] = splitUrl(url);
-      auto addr = ParseIp(domain, "443");
-      auto conn = TlsConnection(addr);
-      net::HTTPRequest req{};
-      req.AutoFill().Page(filename).Header("Host", domain);
-      if (!append.empty())
-        for (int i = 0; i < append.size() - 1; i += 2) {
-          req.Header(append[i], append[i + 1]);
-        }
-      auto rep = net::SendHTTPRequest(conn, req);
-      conn.Close();
-      return rep.content;
-    }
-    String httpsGet(TlsConnection &conn, const String &url, const std::vector<String> &append) {
-      auto partition = url.find('/');
-      auto domain = partition == std::string::npos ? url : url(0, partition);
-      auto filename = partition == std::string::npos ? "/" : url(partition, url.size());
-      net::HTTPRequest req{};
-      req.AutoFill().Page(filename).Header("Host", domain);
-      if (!append.empty())
-        for (int i = 0; i < append.size() - 1; i += 2) {
-          req.Header(append[i], append[i + 1]);
-        }
-      auto rep = net::SendHTTPRequest(conn, req);
-      return rep.content;
-    }
     net::HTTPResponse SendHTTPRequest(Connection &conn, const HTTPRequest &req) {
       auto s = req.Serialize();
       Slice<char> sl(const_cast<char *>(s.data()), s.size());
@@ -173,7 +129,7 @@ namespace srlib {
               } else if (size_end == size_t(-1)) {
                 break;
               }
-              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string_reference(),
+              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(),
                                            nullptr,
                                            16);
               if (chunk_size == 0)break;
@@ -215,7 +171,7 @@ namespace srlib {
       while (true) {
         auto count = conn.Read(buf(wr_off));
         if (count <= 0) {
-          req = HTTPRequest::Unserialize(buf(0, wr_off).ToString());
+          req.Version("");
           break;
         }
         wr_off += count;
@@ -253,7 +209,7 @@ namespace srlib {
               } else if (size_end == size_t(-1)) {
                 break;
               }
-              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string_reference(),
+              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(),
                                            nullptr,
                                            16);
               if (chunk_size == 0)break;
