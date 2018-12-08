@@ -1,4 +1,4 @@
-package sample;
+package lmss.view;
 
 public class Controller {
 }
