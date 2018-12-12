@@ -129,9 +129,7 @@ namespace srlib {
               } else if (size_end == size_t(-1)) {
                 break;
               }
-              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(),
-                                           nullptr,
-                                           16);
+              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(), nullptr, 16);
               if (chunk_size == 0)break;
               // Move Read_Offset , +2 mean "\r\n"
               rd_off += size_end + 2;
@@ -209,9 +207,7 @@ namespace srlib {
               } else if (size_end == size_t(-1)) {
                 break;
               }
-              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(),
-                                           nullptr,
-                                           16);
+              auto chunk_size = std::stoul(buf(rd_off, rd_off + size_end).ToString().const_std_string(), nullptr, 16);
               if (chunk_size == 0)break;
               // Move Read_Offset , +2 mean "\r\n"
               rd_off += size_end + 2;
@@ -244,6 +240,17 @@ namespace srlib {
         }
       }
       return req;
+    }
+    bool SendHTTPResponse(Connection &conn, const HTTPResponse &rep) {
+      auto str = rep.Serialize();
+      Slice<char> buf(const_cast<char *>(str.data()), str.size());
+      int c = 0;
+      while (c < str.size()) {
+        auto w = conn.Write(buf(c));
+        if (w <= 0)return false;
+        c += w;
+      }
+      return true;
     }
   }
 }

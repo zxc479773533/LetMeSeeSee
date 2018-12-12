@@ -83,7 +83,10 @@ namespace srlib {
       static HTTPResponse Unserialize(const String &req);
     };
     HTTPResponse SendHTTPRequest(Connection &conn, const HTTPRequest &req);
+    // Return Value: Request, if failed, req.version is empty.
     HTTPRequest RecvHTTPRequest(Connection &conn);
+    // Return Value: Success
+    bool SendHTTPResponse(Connection &conn, const HTTPResponse &rep);
     std::pair<String, String> splitUrl(const String &url);
   }
 }

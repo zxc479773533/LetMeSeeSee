@@ -69,18 +69,16 @@ namespace lmss {
             auto file_name = Storager::Call(node_name.std_string());
             if (!file_name.empty()) {
               auto file = OpenFile(file_name);
-              conn->Write(net::HTTPResponse{}.Version("1.1")
-                                             .StatusCode("200")
-                                             .ReasonPhrase("OK")
-                                             .Header("Content-Length", std::to_string(file.Size()))
-                                             .Content(file.ReadAll())
-                                             .Serialize());
+              net::SendHTTPResponse(*conn,
+                                    net::HTTPResponse{}.AutoFill()
+                                                       .Header("Content-Length", std::to_string(file.Size()))
+                                                       .Content(file.ReadAll()));
             } else {
-              conn->Write(net::HTTPResponse{}.Version("1.1")
-                                             .StatusCode("404")
-                                             .ReasonPhrase("Not Found")
-                                             .Content("404 not found")
-                                             .Serialize());
+              net::SendHTTPResponse(*conn,
+                                    net::HTTPResponse{}.Version("1.1")
+                                                       .StatusCode("404")
+                                                       .ReasonPhrase("Not Found")
+                                                       .Content("404 not found"));
             }
           }
         }, conn).detach();
