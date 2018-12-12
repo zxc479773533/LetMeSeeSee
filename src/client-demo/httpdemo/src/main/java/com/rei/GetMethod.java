@@ -18,4 +18,5 @@ public class GetMethod {
             return response.body().string();
         }
     }
+
 }
