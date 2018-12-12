@@ -53,7 +53,7 @@ namespace lmss {
           println(req.Serialize());
           if (req.version.empty())return;
           // Request NodeList
-          if (req.page.to_lower() == "/nodelist") {
+          if (req.page == "/nodelist") {
             srlib::String json;
             for (auto &j : _node_list) {
               json += j + "\n";
@@ -61,6 +61,7 @@ namespace lmss {
             conn->Write(net::HTTPResponse{}.Version("1.1")
                                            .StatusCode("200")
                                            .ReasonPhrase("OK")
+                                           .Header("Content-Length", std::to_string(json.size()))
                                            .Content(json)
                                            .Serialize());
           } else {
