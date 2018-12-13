@@ -103,7 +103,7 @@ namespace srlib {
           rep.content.reserve(continue_read);
           rep.content = buf(header_len, off).ToString();
           // - Read Finish
-          if (continue_read == rep.content.size()) break;
+          if (continue_read <= rep.content.size()) break;
           // - Continue to read
           for (continue_read -= rep.content.size(); continue_read != 0;) {
             rd = conn.Read(buf(0));

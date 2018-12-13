@@ -49,37 +49,38 @@ namespace lmss {
       while (true) {
         auto conn = listener.Accept();
         std::thread([this](std::shared_ptr<net::Connection> conn) {
-          auto req = net::RecvHTTPRequest(*conn);
-          println(req.Serialize());
-          if (req.version.empty())return;
-          // Request NodeList
-          if (req.page == "/nodelist") {
-            srlib::String json;
-            for (auto &j : _node_list) {
-              json += j + "\n";
-            }
-            conn->Write(net::HTTPResponse{}.Version("1.1")
-                                           .StatusCode("200")
-                                           .ReasonPhrase("OK")
-                                           .Header("Content-Length", std::to_string(json.size()))
-                                           .Content(json)
-                                           .Serialize());
-          } else {
-            // Request Node
-            auto node_name = req.page(req.page.find('/') + 1, req.page.size());
-            auto file_name = Storager::Call(node_name.std_string());
-            if (!file_name.empty()) {
-              auto file = OpenFile(file_name);
+          while (true) {
+            auto req = net::RecvHTTPRequest(*conn);
+            println(req.Serialize());
+            if (req.version.empty())return;
+            // Request NodeList
+            if (req.page == "/nodelist") {
+              srlib::String json;
+              for (auto &j : _node_list) {
+                json += j + "\n";
+              }
               net::SendHTTPResponse(*conn,
                                     net::HTTPResponse{}.AutoFill()
-                                                       .Header("Content-Length", std::to_string(file.Size()))
-                                                       .Content(file.ReadAll()));
+                                                       .Header("Content-Length", std::to_string(json.size()))
+                                                       .Content(json));
             } else {
-              net::SendHTTPResponse(*conn,
-                                    net::HTTPResponse{}.Version("1.1")
-                                                       .StatusCode("404")
-                                                       .ReasonPhrase("Not Found")
-                                                       .Content("404 not found"));
+              // Request Node
+              auto node_name = req.page(req.page.find('/') + 1, req.page.size());
+              auto file_name = Storager::Call(node_name.std_string());
+              if (!file_name.empty()) {
+                auto file = OpenFile(file_name);
+                net::SendHTTPResponse(*conn,
+                                      net::HTTPResponse{}.AutoFill()
+                                                         .Header("Content-Length", std::to_string(file.Size()))
+                                                         .Content(file.ReadAll()));
+              } else {
+                net::SendHTTPResponse(*conn,
+                                      net::HTTPResponse{}.Version("1.1")
+                                                         .StatusCode("404")
+                                                         .Header("Content-Length", std::to_string(13))
+                                                         .ReasonPhrase("Not Found")
+                                                         .Content("404 not found"));
+              }
             }
           }
         }, conn).detach();

@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
     }
     exit(1);
   }
-  storager.ScanSourceCode("../server");
+  storager.ScanSourceCode("../test");
   auto nodelist_file = srlib::OpenFile("node_list.json");
   for (auto &node : storager.GetNodeList()) {
     nodelist_file.Write(node);
