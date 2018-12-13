@@ -25,12 +25,10 @@ namespace srlib {
       delete _addr;
       Close();
     }
-    Connection::Connection(const srlib::String &ip, std::uint16_t port, int fd, bool connect) : Connection(Address(ip,
-                                                                                                                   port),
-                                                                                                           fd) {}
-    Connection::Connection(const srlib::String &ip, const srlib::String &port, int fd, bool connect) : Connection(
-      Address(ip, port),
-      fd) {}
+    Connection::Connection(const srlib::String &ip, std::uint16_t port, int fd, bool connect)
+        : Connection(Address(ip, port), fd) {}
+    Connection::Connection(const srlib::String &ip, const srlib::String &port, int fd, bool connect)
+        : Connection(Address(ip, port), fd) {}
     Connection::Connection(srlib::net::Connection &&old)noexcept {
       _addr = old._addr;
       _connected = old._connected;
@@ -74,18 +72,12 @@ namespace srlib {
       if (setsockopt(fd(), SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeval)) < 0)perror("setsockopt");
     }
     Address &Connection::GetAddress() {return *_addr;}
-    TcpConnection::TcpConnection(const srlib::net::Address &addr, bool connect) : Connection(addr,
-                                                                                             ::socket(addr.Family(),
-                                                                                                      SOCK_STREAM,
-                                                                                                      0),
-                                                                                             connect) {
-    }
-    TcpConnection::TcpConnection(const srlib::String &ip, std::uint16_t port, bool connect) : TcpConnection(Address(ip,
-                                                                                                                    port,
-                                                                                                                    connect)) {}
-    TcpConnection::TcpConnection(const srlib::String &ip, const srlib::String &port, bool connect) : TcpConnection(
-      Address(ip, port),
-      connect) {}
+    TcpConnection::TcpConnection(const srlib::net::Address &addr, bool connect)
+        : Connection(addr, ::socket(addr.Family(), SOCK_STREAM, 0), connect) {}
+    TcpConnection::TcpConnection(const srlib::String &ip, std::uint16_t port, bool connect)
+        : TcpConnection(Address(ip, port), connect) {}
+    TcpConnection::TcpConnection(const srlib::String &ip, const srlib::String &port, bool connect)
+        : TcpConnection(Address(ip, port), connect) {}
     int Connection::Connect() {
       if (_connected) {
         fprintf(stderr, "This Socket is Already Connected!\n");
