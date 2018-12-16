@@ -15,12 +15,13 @@ matrix:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
 install:
-  - cd src && mkdir build && cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release ../server
+  - cd src && cd server && mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ..
   - make -j2
 
 script:
-  - ./test_reflector ../server
+  - cp ../run_test.sh ./
+  - ./run_test.sh
 
 before_install:
   # Preparing path...
