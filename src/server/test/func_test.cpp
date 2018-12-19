@@ -22,6 +22,9 @@ Store(Save_test2, test2) {
   return "test2.txt";
 }
 
+// argc == 1: Run scan test
+// argc == 2: Start network service
+// Using time command to calculate time
 int main(int argc, char **argv) {
   lmss::Storager storager;
   if (argc != 1) {

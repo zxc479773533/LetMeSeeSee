@@ -56,7 +56,7 @@ namespace lmss {
         std::thread([](std::shared_ptr<net::Connection> conn, const String &json) {
           while (true) {
             auto req = net::RecvHTTPRequest(*conn);
-            println(req.Serialize());
+            // println(req.Serialize());
             if (req.version.empty())return;
             // Request NodeList
             if (req.page == "/nodelist") {
