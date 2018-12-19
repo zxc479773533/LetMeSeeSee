@@ -7,8 +7,10 @@
 namespace srlib {
   namespace net {
     String HTTPRequest::Serialize() const {
+      if (method.empty() || page.empty() || version.empty())return {};
       auto res = method + ' ' + page + " HTTP/" + version + "\r\n";
       for (auto &field : header) {
+        if (field.second.empty())continue;
         res += field.first + ": " + field.second + "\r\n";
       }
       res += "\r\n";
@@ -35,8 +37,10 @@ namespace srlib {
       return res;
     }
     String HTTPResponse::Serialize() const {
+      if (version.empty() || status_code.empty() || reason_phrase.empty())return {};
       auto res = "HTTP/" + version + ' ' + status_code + ' ' + reason_phrase + "\r\n";
       for (auto &field : header) {
+        if (field.second.empty())continue;
         res += field.first + ": " + field.second + "\r\n";
       }
       res += "\r\n";
@@ -195,7 +199,8 @@ namespace srlib {
             }
           }
           break;
-        } else if (req.header["Transfer-Encoding"] == "chunked"_s) {
+        } else if (req.header.find("Transfer-Encoding") != req.header.end() &&
+                   req.header["Transfer-Encoding"] == "chunked"_s) {
           rd_off = header_end;
           while (true) {
             if (wr_off > rd_off) {
