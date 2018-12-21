@@ -2,7 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 project(server)
 
 set(CMAKE_CXX_STANDARD 11)
-
-add_library(storager storager/storager.cpp)
-
-add_executable(test_reflector test/test_reflector.cpp storager/storager.cpp)
+file(GLOB NET_SOURCE net/*.cpp)
+add_library(net ${NET_SOURCE})
+file(GLOB STORAGER_SOURCE storager/*.cpp)
+add_library(storager ${STORAGER_SOURCE})
+find_package(Threads)
+target_link_libraries(storager net ${CMAKE_THREAD_LIBS_INIT})
+add_executable(func_test test/func_test.cpp)
+target_link_libraries(func_test storager)
+add_executable(net_test test/net_test.cpp)
+target_link_libraries(net_test storager)

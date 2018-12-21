@@ -1,7 +1,7 @@
 #ifndef UTILITY_PIPE_H
 #define UTILITY_PIPE_H
 
-#include "nstr.h"
+#include "exstring.h"
 #include "array.h"
 #include <unistd.h>
 #include <fcntl.h>
