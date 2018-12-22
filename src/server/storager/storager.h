@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <atomic>
 #include "../utility/singleton.h"
 
 namespace lmss {

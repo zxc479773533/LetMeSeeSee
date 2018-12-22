@@ -42,6 +42,7 @@ namespace lmss {
       }
     });
   }
+  std::atomic<int> client_count;
   void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
     using namespace srlib;
     std::thread([ip, port, this]() {
@@ -52,12 +53,17 @@ namespace lmss {
       net::Listener listener(net::Address(ip, port));
       while (true) {
         auto conn = listener.Accept();
+        if (client_count >= 20) {
+          conn->Close();
+          continue;
+        }
+        client_count++;
         println("Connection from", conn->GetAddress().Ip() + ":" + std::to_string(conn->GetAddress().Port()));
         std::thread([](std::shared_ptr<net::Connection> conn, const String &json) {
           while (true) {
             auto req = net::RecvHTTPRequest(*conn);
             // println(req.Serialize());
-            if (req.version.empty())return;
+            if (req.version.empty())break;
             // Request NodeList
             if (req.page == "/nodelist") {
               net::SendHTTPResponse(*conn,
@@ -84,6 +90,7 @@ namespace lmss {
               }
             }
           }
+          client_count--;
         }, conn, json).detach();
       }
     }).detach();
