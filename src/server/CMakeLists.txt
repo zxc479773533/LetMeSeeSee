@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 project(server)
 
+include_directories(/usr/include/LetMeSeeSee)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -fPIC)
 set(CMAKE_INSTALL_PREFIX /usr)
@@ -17,7 +19,7 @@ target_link_libraries(storager_static net ${CMAKE_THREAD_LIBS_INIT})
 
 # 安装动态链接库
 install(TARGETS storager storager_static LIBRARY DESTINATION lib ARCHIVE DESTINATION lib) 
-install(FILES storager/storager.h DESTINATION include/LetMeSeeSee) 
+install(FILES storager/storager.h DESTINATION include/LetMeSeeSee)
 
 # 编译测试文件
 add_executable(func_test test/func_test.cpp)

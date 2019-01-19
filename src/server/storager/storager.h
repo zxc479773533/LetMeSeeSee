@@ -3,9 +3,17 @@
 
 #include <unordered_map>
 #include <vector>
-#include "../utility/singleton.h"
 
 namespace lmss {
+  // 单例模式
+  // With C++11, static variable's construction is thread-safety.
+  template <typename T> class Singleton {
+  public:
+    static T &GetInstance() {
+      static T ins{};
+      return ins;
+    }
+  };
   
   // 数据储存节点函数类型。
   typedef std::string(*store_t)();
@@ -15,7 +23,7 @@ namespace lmss {
   class Storager {
   private:
     // 使用单例模式避免注册函数在Reflector初始化前被调用。
-    typedef srlib::Singleton<Reflector<store_t>> reflector;
+    typedef Singleton<Reflector<store_t>> reflector;
   private:
     // json格式的节点列表。
     std::vector<std::string> _node_list;
@@ -28,7 +36,7 @@ namespace lmss {
     // 扫描源码，并将所有数据储存节点转换为json格式保存。
     void ScanSourceCode(const std::string &path);
     // 返回节点列表。
-    std::vector<std::string> &GetNodeList() {return _node_list;}
+    std::vector<std::string> &GetNodeList() { return _node_list; }
   };
 // Store宏，第一个参数是数据储存节点的名称，之后的参数为该节点储存的数据的名称。
 // 通过helper变量调用Storager的注册函数。
