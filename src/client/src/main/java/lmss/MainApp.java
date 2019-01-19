@@ -23,9 +23,9 @@ public class MainApp extends Application {
      * Constructor
      */
     public MainApp() {
-        fileNodeData.add(new FileNode("a", "a"));
-        fileNodeData.add(new FileNode("b", "b"));
-        fileNodeData.add(new FileNode("c", "c"));
+        fileNodeData.add(new FileNode("a", "a", "123", "0x123"));
+        fileNodeData.add(new FileNode("b", "b", "456", "0x456"));
+        fileNodeData.add(new FileNode("c", "c", "789", "0x789"));
     }
 
     public ObservableList<FileNode> getFileNodeData() {
