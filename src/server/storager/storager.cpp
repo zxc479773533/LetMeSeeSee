@@ -1,4 +1,5 @@
 #include <thread>
+#include <atomic>
 #include "storager.h"
 #include "../utility/file.h"
 #include "../utility/io.h"
@@ -64,15 +65,17 @@ namespace lmss {
             auto req = net::RecvHTTPRequest(*conn);
             // println(req.Serialize());
             if (req.version.empty())break;
+            // No Command
+            if (req.header["CMD"].empty())break;
             // Request NodeList
-            if (req.page == "/nodelist") {
+            if (req.header["CMD"] == "nodelist") {
               net::SendHTTPResponse(*conn,
                                     net::HTTPResponse{}.AutoFill()
                                                        .Header("Content-Length", std::to_string(json.size()))
                                                        .Content(json));
             } else {
               // Request Node
-              auto node_name = req.page(req.page.find('/') + 1, req.page.size());
+              auto node_name = req.header["CMD"];
               auto file_name = Storager::Call(node_name.std_string());
               if (!file_name.empty()) {
                 auto file = OpenFile(file_name);
