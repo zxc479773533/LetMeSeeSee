@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import lmss.model.FileNode;
 import lmss.view.MainOverviewController;
+import lmss.view.RootLayoutController;
 
 import java.io.IOException;
 

@@ -90,8 +90,8 @@
                                                             </GridPane>
                                                             <FlowPane prefHeight="23.0" prefWidth="117.0">
                                                                <children>
+                                                                  <Button mnemonicParsing="false" text="Watch" />
                                                                   <Button mnemonicParsing="false" text="Save" />
-                                                                  <Button mnemonicParsing="false" text="Delete" />
                                                                </children>
                                                             </FlowPane>
                                                          </children>
