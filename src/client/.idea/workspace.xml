@@ -2,29 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_controlsfx_controlsfx_8_20_8.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_controlsfx_openjfx_dialogs_1_0_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lmss/model/NodeListBean.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/lmss/model/SharedData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/model/FileNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/model/FileNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/utils/net/RequestCmd.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/utils/net/RequestCmd.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/view/MainOverview.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/view/MainOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/view/RootLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/view/RootLayout.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lmss/MainApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lmss/model/FileNode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lmss/utils/net/RequestCmd.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lmss/utils/net/RequestCmd.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lmss/view/MainOverviewController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lmss/view/RootLayoutController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/MainOverview.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/MainOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/RootLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/RootLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/view/ContextMenuOverview.fxml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/client-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/client-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,14 +65,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="68" column="61" selection-start-line="68" selection-start-column="61" selection-end-line="68" selection-end-column="61" />
+            <state relative-caret-position="1281">
+              <caret line="74" column="41" selection-start-line="74" selection-start-column="41" selection-end-line="74" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -106,7 +98,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
+            <state relative-caret-position="2016">
               <caret line="104" column="42" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -130,8 +122,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/lmss/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
+            <state relative-caret-position="170">
+              <caret line="44" column="43" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -181,15 +173,15 @@
         <option value="$PROJECT_DIR$/src/main/java/lmss/utils/Connect.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/utils/net/JsonResolve.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/model/FileNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/lmss/MainApp.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/model/MessagesModel.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/utils/net/RequestCmd.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/model/SharedData.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/utils/net/JsonParser.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/model/NodeListBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java" />
         <option value="$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/lmss/MainApp.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -226,16 +218,21 @@
           <item name="client" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
         </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="client" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="jfx" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
       </expand>
       <select />
     </treeState>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="252" />
-    <option name="y" value="-35" />
-    <option name="width" value="2597" />
-    <option name="height" value="1437" />
+    <option name="x" value="1258" />
+    <option name="width" value="1302" />
+    <option name="height" value="1399" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectReloadState">
@@ -246,6 +243,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -313,12 +312,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -332,7 +334,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -459,16 +461,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1477" height="807" extended-state="6" />
+    <frame x="719" y="0" width="744" height="799" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.19493315" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" weight="0.40843022" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32952183" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.35798818" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19011976" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -489,7 +491,7 @@
       <window_info anchor="right" id="Database" order="4" />
       <window_info anchor="right" id="Palette" order="5" />
       <window_info anchor="right" id="Maven Projects" order="6" />
-      <window_info anchor="right" id="Maven" order="7" weight="0.20760028" />
+      <window_info anchor="right" id="Maven" order="7" weight="0.42877907" />
       <window_info anchor="right" id="Cargo" order="8" />
       <window_info anchor="right" id="Palette&#9;" order="9" />
     </layout>
@@ -557,8 +559,8 @@
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/MainOverview.fxml" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/RootLayout.fxml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/RootLayout.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/lmss/utils/net/JsonResolve.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/lmss/model/MessagesModel.java" />
@@ -583,10 +585,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
+        <state relative-caret-position="1281">
+          <caret line="74" column="41" selection-start-line="74" selection-start-column="41" selection-end-line="74" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -594,6 +599,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2016">
+          <caret line="104" column="42" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -607,33 +622,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/MainOverviewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="104" column="42" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/lmss/MainApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        <state relative-caret-position="170">
+          <caret line="44" column="43" selection-start-line="44" selection-start-column="43" selection-end-line="44" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/lmss/view/RootLayoutController.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="68" column="61" selection-start-line="68" selection-start-column="61" selection-end-line="68" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -643,10 +645,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>client</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
