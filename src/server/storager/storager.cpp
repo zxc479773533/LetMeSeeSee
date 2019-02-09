@@ -1,4 +1,5 @@
 #include <thread>
+#include <atomic>
 #include "storager.h"
 #include "../utility/file.h"
 #include "../utility/io.h"
@@ -42,30 +43,39 @@ namespace lmss {
       }
     });
   }
+  std::atomic<int> client_count;
   void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
     using namespace srlib;
-    std::thread([&ip, port, this]() {
+    std::thread([ip, port, this]() {
+      srlib::String json;
+      for (auto &j : _node_list) {
+        json += j + "\n";
+      }
       net::Listener listener(net::Address(ip, port));
       while (true) {
         auto conn = listener.Accept();
-        std::thread([this](std::shared_ptr<net::Connection> conn) {
+        if (client_count >= 20) {
+          conn->Close();
+          continue;
+        }
+        client_count++;
+        println("Connection from", conn->GetAddress().Ip() + ":" + std::to_string(conn->GetAddress().Port()));
+        std::thread([](std::shared_ptr<net::Connection> conn, const String &json) {
           while (true) {
             auto req = net::RecvHTTPRequest(*conn);
             // println(req.Serialize());
-            if (req.version.empty())return;
+            if (req.version.empty())break;
+            // No Command
+            if (req.header["CMD"].empty())break;
             // Request NodeList
-            if (req.page == "/nodelist") {
-              srlib::String json;
-              for (auto &j : _node_list) {
-                json += j + "\n";
-              }
+            if (req.header["CMD"] == "nodelist") {
               net::SendHTTPResponse(*conn,
                                     net::HTTPResponse{}.AutoFill()
                                                        .Header("Content-Length", std::to_string(json.size()))
                                                        .Content(json));
             } else {
               // Request Node
-              auto node_name = req.page(req.page.find('/') + 1, req.page.size());
+              auto node_name = req.header["CMD"];
               auto file_name = Storager::Call(node_name.std_string());
               if (!file_name.empty()) {
                 auto file = OpenFile(file_name);
@@ -83,7 +93,8 @@ namespace lmss {
               }
             }
           }
-        }, conn).detach();
+          client_count--;
+        }, conn, json).detach();
       }
     }).detach();
   }
