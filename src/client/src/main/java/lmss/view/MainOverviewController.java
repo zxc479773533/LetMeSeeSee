@@ -4,6 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import lmss.MainApp;
 import lmss.model.FileNode;
+import lmss.model.SharedData;
+import lmss.utils.net.RequestCmd;
+import javafx.event.ActionEvent;
+import java.io.IOException;
+import java.util.Date;
 
 public class MainOverviewController {
     @FXML
@@ -19,8 +24,17 @@ public class MainOverviewController {
     private Label dataNameLabel;
     @FXML
     private Label ValueLabel;
+
     @FXML
-    private Label AddressLabel;
+    private Button watchButton;
+    @FXML
+    private Button saveButton;
+
+    public static SharedData sharedData = new SharedData();
+
+    private String serverUrl;
+    private FileNode fileNode;
+
 
     private MainApp mainApp;
 
@@ -49,6 +63,8 @@ public class MainOverviewController {
         // Listen for selection changes and show the data details when changed
         fileNodeTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showMainDetails(newValue));
+        sharedData.serverUrlProperty().addListener(
+                (observable, oldValue, newValue) -> serverUrl = sharedData.getServerUrl());
     }
 
 
@@ -65,17 +81,38 @@ public class MainOverviewController {
      * @param fileNode
      */
     private void showMainDetails(FileNode fileNode) {
+        this.fileNode = fileNode;
         if (fileNode != null) {
             //Fill the labels with info from the person object.
-            dataNameLabel.setText(fileNode.getnodeName());
+            nodeNameLabel.setText(fileNode.getNodeName());
+            dataNameLabel.setText(fileNode.getDataName());
             ValueLabel.setText(fileNode.getValue());
-            AddressLabel.setText(fileNode.getAddress());
         } else {
+            nodeNameLabel.setText("");
             dataNameLabel.setText("");
             ValueLabel.setText("");
-            AddressLabel.setText("");
         }
     }
 
+    @FXML
+    private void handleWatch() {
+        watchButton.setOnAction( (ActionEvent event) -> {
+            if (!serverUrl.isEmpty() || RequestCmd.isHttpUrl(serverUrl)) {
+                RequestCmd requestCmd = new RequestCmd();
+                try {
+                    String data = requestCmd.run(serverUrl, nodeNameLabel.getText());
+                    sharedData.setMessage(data);
+                    fileNode.setValue(data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void handleSave() {
+
+    }
 
 }

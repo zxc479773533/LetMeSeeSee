@@ -25,16 +25,18 @@ public class MainApp extends Application {
      * Constructor
      */
     public MainApp() {
-        fileNodeData.add(new FileNode("a", "a", "123", "0x123"));
-        fileNodeData.add(new FileNode("b", "b", "456", "0x456"));
-        fileNodeData.add(new FileNode("c", "c", "789", "0x789"));
+        fileNodeData.add(new FileNode("a", "a", "123"));
+        fileNodeData.add(new FileNode("b", "b", "456"));
+        fileNodeData.add(new FileNode("c", "c", "789"));
     }
 
     public ObservableList<FileNode> getFileNodeData() {
+
         return fileNodeData;
     }
 
     public static void main(String[] args) {
+
         launch(args);
     }
 
@@ -84,8 +86,11 @@ public class MainApp extends Application {
     }
 
     public Stage getPrimaryStage() {
+
         return primaryStage;
     }
+
+
 
 }
 

@@ -1,5 +1,7 @@
+lmss\model\NodeListBean.class
 lmss\utils\net\RequestCmd.class
 lmss\model\FileNode.class
+lmss\model\SharedData.class
 lmss\MainApp.class
 lmss\view\RootLayoutController.class
 lmss\view\MainOverviewController.class

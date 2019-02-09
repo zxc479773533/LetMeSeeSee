@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.io.File;
 
 /**
  * Model class for lmss file node
@@ -15,28 +14,25 @@ public class FileNode {
 
     private final StringProperty nodeName;
     private final StringProperty dataName;
-    private final StringProperty Value;
-    private final StringProperty Address;
-
+    private final StringProperty value;
 
     public FileNode() {
-        this(null, null, null, null);
+        this(null, null, null);
     }
 
-    public FileNode(String nodeName, String dataName, String Value, String Address) {
+    public FileNode(String nodeName, String dataName, String value) {
         this.nodeName = new SimpleStringProperty(nodeName);
         this.dataName = new SimpleStringProperty(dataName);
-        this.Value = new SimpleStringProperty(Value);
-        this.Address = new SimpleStringProperty(Address);
+        this.value = new SimpleStringProperty(value);
     }
 
-    //get and set methods for nodeName, DataName, Value and Address
+    //get and set methods for nodeName, DataName, value and Address
 
-    public String getnodeName() {
+    public String getNodeName() {
         return nodeName.get();
     }
 
-    public void setnodeName(String nodeName) {
+    public void setNodeName(String nodeName) {
         this.nodeName.set(nodeName);
     }
 
@@ -56,18 +52,10 @@ public class FileNode {
         return dataName;
     }
 
-    public String getValue() { return Value.get();}
+    public String getValue() { return value.get();}
 
-    public void setValue(String Value) { this.Value.set(Value);}
+    public void setValue(String value) { this.value.set(value);}
 
-    public StringProperty ValueProperty() {return Value;}
-
-    public String getAddress() { return Address.get();}
-
-    public void setAddress(String Address) { this.Address.set(Address);}
-
-    public StringProperty AddressProperty() {return Address;}
-
-
+    public StringProperty valueProperty() {return value;}
 
 }
