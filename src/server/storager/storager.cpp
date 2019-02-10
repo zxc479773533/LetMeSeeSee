@@ -7,6 +7,9 @@
 #include "../net/address.h"
 #include "../net/connection.h"
 #include "../net/request.h"
+#include "../utility/logger.h"
+
+using namespace srlib::log;
 
 namespace lmss {
   std::string Storager::Call(const std::string &name) {
@@ -14,10 +17,14 @@ namespace lmss {
     if (f) {
       return f();
     }
-    srlib::logln("Reflector Warning: No Matching Function:", name);
+    Log.Logln("Reflector Warning: No Matching Function: " + name);
     return {};
   }
+  void Storager::SetLogFile(const std::string &filename) {
+    Log.SetOutputFile(filename);
+  }
   void Storager::ScanSourceCode(const std::string &path) {
+    Log.Logln("Scan Source Code Begin...");
     // 遍历目录，对目录下的每一个文件进行扫描。
     srlib::OpenDir(path).RecursiveWalk([this](srlib::FileInfo &&info) {
       std::string reg(R"(^ *Store\(([^)]*)\).*$)");
@@ -42,6 +49,7 @@ namespace lmss {
         }
       }
     });
+    Log.Logln("Scan Source Code End. Found " + std::to_string(_node_list.size()) + " Node(s).");
   }
   std::atomic<int> client_count;
   void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
@@ -59,16 +67,23 @@ namespace lmss {
           continue;
         }
         client_count++;
-        println("Connection from", conn->GetAddress().Ip() + ":" + std::to_string(conn->GetAddress().Port()));
         std::thread([](std::shared_ptr<net::Connection> conn, const String &json) {
+          auto addr = conn->GetAddress().Ip() + ":" + std::to_string(conn->GetAddress().Port());
+          Log.Logln("Connection from " + addr.std_string());
           while (true) {
             auto req = net::RecvHTTPRequest(*conn);
-            // println(req.Serialize());
-            if (req.version.empty())break;
+            if (req.version.empty()) {
+              Log.Logln(addr.std_string() + " Receive HTTP Request Failed.");
+              break;
+            }
             // No Command
-            if (req.header["CMD"].empty())break;
+            if (req.header["CMD"].empty()) {
+              Log.Logln(addr.std_string() + "Command Is Empty.");
+              break;
+            }
             // Request NodeList
             if (req.header["CMD"] == "nodelist") {
+              Log.Logln(addr.std_string() + "GET nodelist");
               net::SendHTTPResponse(*conn,
                                     net::HTTPResponse{}.AutoFill()
                                                        .Header("Content-Length", std::to_string(json.size()))
@@ -78,12 +93,14 @@ namespace lmss {
               auto node_name = req.header["CMD"];
               auto file_name = Storager::Call(node_name.std_string());
               if (!file_name.empty()) {
+                Log.Logln(addr.std_string() + "GET " + node_name.std_string() + " Success.");
                 auto file = OpenFile(file_name);
                 net::SendHTTPResponse(*conn,
                                       net::HTTPResponse{}.AutoFill()
                                                          .Header("Content-Length", std::to_string(file.Size()))
                                                          .Content(file.ReadAll()));
               } else {
+                Log.Logln(addr.std_string() + "GET " + node_name.std_string() + " Failed.");
                 net::SendHTTPResponse(*conn,
                                       net::HTTPResponse{}.Version("1.1")
                                                          .StatusCode("404")
