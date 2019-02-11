@@ -55,10 +55,12 @@ namespace lmss {
   void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
     using namespace srlib;
     std::thread([ip, port, this]() {
-      srlib::String json;
+      srlib::String json = "[";
       for (auto &j : _node_list) {
-        json += j + "\n";
+        json += j + ",";
       }
+      if (json.size() > 1)json[json.size() - 1] = ']';
+      else json += ']';
       net::Listener listener(net::Address(ip, port));
       while (true) {
         auto conn = listener.Accept();
