@@ -38,6 +38,7 @@
             <HBox prefHeight="25.0" prefWidth="296.0">
                <children>
                   <TextField fx:id="addressField" promptText="Address" />
+                  <TextField fx:id="portField" prefHeight="23.0" prefWidth="66.0" promptText="Port" />
                   <Button fx:id="connectButton" mnemonicParsing="false" onAction="#handleConnect" text="Connect" />
                </children>
             </HBox>
@@ -45,11 +46,11 @@
       </FlowPane>
    </top>
    <bottom>
-      <TitledPane animated="false" prefHeight="125.0" prefWidth="600.0" text="Log" BorderPane.alignment="CENTER">
+      <TitledPane animated="false" prefHeight="125.0" prefWidth="600.0" text="Log">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextArea fx:id="logArea" layoutX="24.0" layoutY="-20.0" prefHeight="101.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TextArea fx:id="logArea" editable="false" layoutX="24.0" layoutY="-20.0" prefHeight="101.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
         </content>

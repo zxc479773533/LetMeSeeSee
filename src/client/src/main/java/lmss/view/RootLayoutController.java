@@ -1,11 +1,14 @@
 package lmss.view;
 
+import com.google.gson.reflect.TypeToken;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+
 import com.google.gson.*;
 import lmss.MainApp;
 import lmss.model.FileNode;
@@ -24,6 +27,8 @@ public class RootLayoutController {
     private MenuBar menuBar;
     @FXML
     private TextField addressField;
+    @FXML
+    private TextField portField;
     @FXML
     private Button connectButton;
     @FXML
@@ -53,25 +58,40 @@ public class RootLayoutController {
     @FXML
     public void handleConnect() {
         connectButton.setOnAction( (ActionEvent event) -> {
+            fileNodeList = mainApp.getFileNodeData();
+            fileNodeList.clear();
             if (addressField.getText().isEmpty() || !RequestCmd.isHttpUrl(addressField.getText())) {
                 setLogArea("请检查URL格式, 示例：https://www.baidu.com");
                 addressField.clear();
             }
-            else if (
-                    (addressField.getText() != null && !addressField.getText().isEmpty())
-            ) {
-                server_address = addressField.getText();
+            else if (Integer.parseInt(portField.getText()) < 1 ||
+                     Integer.parseInt(portField.getText()) > 65535) {
+                setLogArea("端口号越界！");
+                portField.clear();
+            }
+            else if ((addressField.getText() != null &&
+                     !addressField.getText().isEmpty())) {
+                server_address = addressField.getText() + ":" + portField.getText();
+                sharedData.setServerUrl(server_address);
                 RequestCmd requestCmd = new RequestCmd();
                 try {
-                    Gson gson = new Gson();
+                    Gson gson = new GsonBuilder().setLenient().create();
                     String getResponse = requestCmd.run(server_address, "nodelist");
-                    NodeListBean nodeList = gson.fromJson(getResponse, NodeListBean.class);
-                    fileNodeList = mainApp.getFileNodeData();
-                    for (String dataName: nodeList.dataNames) {
-                        fileNodeList.add(new FileNode(nodeList.nodeName, dataName, null));
+                    if (getResponse.equals("NullPointerException!")
+                            || getResponse.equals("ConnectException!")
+                            || getResponse.equals("IOException!")) {
+                        setLogArea(getResponse);
                     }
-
-                    setLogArea(getResponse);
+                    else {
+                        setLogArea(getResponse);
+                        List<NodeListBean> nodeList = gson.fromJson(getResponse.trim(), new TypeToken<List<NodeListBean>>(){}.getType());
+                        fileNodeList = mainApp.getFileNodeData();
+                        for (NodeListBean node: nodeList) {
+                            for (String dataName: node.dataName) {
+                                fileNodeList.add(new FileNode(node.nodeName, dataName, null));
+                            }
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

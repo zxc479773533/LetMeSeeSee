@@ -76,7 +76,7 @@
                                                             <FlowPane prefHeight="23.0" prefWidth="117.0">
                                                                <children>
                                                                   <Button fx:id="watchButton" mnemonicParsing="false" onAction="#handleWatch" text="Watch" />
-                                                                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#handleSave" text="Save" />
+                                                                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
                                                                </children>
                                                             </FlowPane>
                                                          </children>

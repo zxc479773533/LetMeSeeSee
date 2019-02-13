@@ -15,5 +15,6 @@
     <orderEntry type="library" name="Maven: org.controlsfx:openjfx-dialogs:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okhttp3:okhttp:3.12.1" level="project" />
     <orderEntry type="library" name="Maven: com.squareup.okio:okio:1.15.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:16.0.2" level="project" />
   </component>
 </module>

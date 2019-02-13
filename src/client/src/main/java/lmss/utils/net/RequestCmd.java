@@ -1,13 +1,13 @@
 package lmss.utils.net;
 
-import lmss.view.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import com.google.gson.*;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import lmss.model.SharedData;
 
 /**
  * the class that is used to request node list or a single node data
@@ -27,17 +27,21 @@ public class RequestCmd {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-
             return response.body().string();
         } catch (NullPointerException e) {
             System.out.println("NullPointerException!");
-
-            return null;
+            return "NullPointerException!";
+        } catch (ConnectException connectEx) {
+            System.out.println("ConnectException");
+            return "ConnectException!";
+        } catch (IOException IoEx) {
+            System.out.println("IOException");
+            return "IOException!";
         }
 
     }
 
-    public static boolean isHttpUrl(String urls) {
+    public static boolean isHttpUrl(@org.jetbrains.annotations.NotNull String urls) {
         boolean isUrl = false;
         String regex = "(((https|http)?://)?([a-z0-9]+[.])|(www.))"
                 + "\\w+[.|\\/]([a-z0-9]{0,})?[[.]([a-z0-9]{0,})]+((/[\\S&&[^,;\u4E00-\u9FA5]]+)+)?([.][a-z0-9]{0,}+|/?)";

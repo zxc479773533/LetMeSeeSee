@@ -7,8 +7,8 @@ import lmss.model.FileNode;
 import lmss.model.SharedData;
 import lmss.utils.net.RequestCmd;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert.*;
 import java.io.IOException;
-import java.util.Date;
 
 public class MainOverviewController {
     @FXML
@@ -28,14 +28,10 @@ public class MainOverviewController {
     @FXML
     private Button watchButton;
     @FXML
-    private Button saveButton;
+    private Button deleteButton;
 
     public static SharedData sharedData = new SharedData();
-
-    private String serverUrl;
     private FileNode fileNode;
-
-
     private MainApp mainApp;
 
     /**
@@ -63,8 +59,6 @@ public class MainOverviewController {
         // Listen for selection changes and show the data details when changed
         fileNodeTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showMainDetails(newValue));
-        sharedData.serverUrlProperty().addListener(
-                (observable, oldValue, newValue) -> serverUrl = sharedData.getServerUrl());
     }
 
 
@@ -97,22 +91,43 @@ public class MainOverviewController {
     @FXML
     private void handleWatch() {
         watchButton.setOnAction( (ActionEvent event) -> {
-            if (!serverUrl.isEmpty() || RequestCmd.isHttpUrl(serverUrl)) {
+            if (sharedData.getServerUrl() != null && !sharedData.getServerUrl().isEmpty()) {
                 RequestCmd requestCmd = new RequestCmd();
                 try {
-                    String data = requestCmd.run(serverUrl, nodeNameLabel.getText());
+                    String data = requestCmd.run(sharedData.getServerUrl(), nodeNameLabel.getText());
                     sharedData.setMessage(data);
                     fileNode.setValue(data);
+                    ValueLabel.setText(fileNode.getValue());
                 } catch (IOException e) {
                     e.printStackTrace();
+                    sharedData.setMessage("ERROR:IOException!");
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setHeaderText("Look, an Error Dialog");
+                    alert.setContentText("Ooops, there was an error!");
+                    alert.showAndWait();
                 }
+            }
+            else {
+                sharedData.setMessage("error");
+                System.out.println("error:"+sharedData.getServerUrl());
             }
         });
     }
 
     @FXML
-    private void handleSave() {
-
+    private void handleDelete() {
+        int selectedIndex = fileNodeTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            fileNodeTable.getItems().remove(selectedIndex);
+        } else {
+            sharedData.setMessage("ERROR:void delete");
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("Look, an Error Dialog");
+            alert.setContentText("Ooops, there was an error!");
+            alert.showAndWait();
+        }
     }
 
 }

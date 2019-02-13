@@ -1,7 +1,11 @@
 package lmss.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class NodeListBean {
 
+    @SerializedName("node")
     public String nodeName;
-    public String[] dataNames;
+    @SerializedName("data")
+    public String[] dataName;
 }
