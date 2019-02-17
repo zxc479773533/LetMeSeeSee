@@ -57,7 +57,7 @@ namespace srlib {
         LogMessage(msg);
         LogSuffix();
         if (ln)Os() << std::endl;
-        if (fatal)std::abort();
+        if (fatal)std::exit(-1);
       }
     public:
       Logger() : _m_os(&std::clog), _m_time_flag(true), _m_deli(": ") {}
