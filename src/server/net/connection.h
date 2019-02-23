@@ -27,7 +27,7 @@ namespace srlib {
       Connection &operator=(Connection &&old)noexcept;
       int Connect();
       bool IsConnected();
-      int Disconnect();
+      void Disconnect();
       ssize_t Send(const String &msg, int flag = 0);
       String Recv(size_t size, int flag = 0);
       void SetSendTimeout(const struct timeval &timeout);
