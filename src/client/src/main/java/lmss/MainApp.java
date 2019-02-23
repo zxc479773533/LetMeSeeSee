@@ -34,9 +34,7 @@ public class MainApp extends Application {
      * Constructor
      */
     public MainApp() {
-        fileNodeData.add(new FileNode("a", "a", "123"));
-        fileNodeData.add(new FileNode("b", "b", "456"));
-        fileNodeData.add(new FileNode("c", "c", "789"));
+
     }
 
     public ObservableList<FileNode> getFileNodeData() {
@@ -71,10 +69,11 @@ public class MainApp extends Application {
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.show();
 
             RootLayoutController controller = loader.getController();
             controller.setMainApp(this);
+
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

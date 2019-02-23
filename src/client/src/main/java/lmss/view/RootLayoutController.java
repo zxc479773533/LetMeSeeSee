@@ -5,11 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import com.google.gson.*;
+import javafx.stage.FileChooser;
 import lmss.MainApp;
 import lmss.model.FileNode;
 import lmss.model.NodeListBean;
@@ -100,6 +103,76 @@ public class RootLayoutController {
                 setLogArea("Connect error!");
             }
         });
+    }
+
+
+    /**
+     * Creates an empty address book.
+     */
+    @FXML
+    private void handleNew() {
+        mainApp.getFileNodeData().clear();
+        mainApp.setNodeListFilePath(null);
+    }
+
+    /**
+     * Opens a FileChooser to let the user select an address book to load
+     */
+    @FXML
+    private void handleOpen() {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(
+                "XML file (*.xml)", "*.xml"
+        );
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            mainApp.loadNodeDataFromFile(file);
+        }
+    }
+
+    /**
+     * Saves the file to the person file that is currently open. If there is no
+     * open file, the "save as" dialog is shown.
+     */
+    @FXML
+    private void handleSave() {
+        File nodeFile = mainApp.getNodeListFilePath();
+        if (nodeFile != null) {
+            mainApp.saveNodeDataFromFile(nodeFile);
+        } else {
+            handleSaveAs();
+        }
+    }
+
+    /**
+     *
+     */
+    @FXML
+    private void handleSaveAs() {
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml"
+        );
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".xml")) {
+                file = new File(file.getPath() + ".xml");
+            }
+            mainApp.saveNodeDataFromFile(file);
+        }
+
     }
 
     @FXML

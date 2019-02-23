@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/client_jar</output-path>
+    <root id="archive" name="client.jar">
+      <element id="module-output" name="client" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/controlsfx/openjfx-dialogs/1.0.2/openjfx-dialogs-1.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/com/squareup/okhttp3/okhttp/3.12.1/okhttp-3.12.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/com/squareup/okio/okio/1.15.0/okio-1.15.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/controlsfx/controlsfx/8.20.8/controlsfx-8.20.8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.m2/repository/org/jetbrains/annotations/16.0.2/annotations-16.0.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
