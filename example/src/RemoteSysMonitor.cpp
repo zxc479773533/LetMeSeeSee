@@ -9,7 +9,6 @@
 // Add the LetMeSeeSee header
 #include <LetMeSeeSee/storager.h>
 
-#include <climits>
 #include "lib/sys/cmdparser.h"
 #include "lib/sys/time.h"
 #include "lib/io/file.h"
@@ -113,7 +112,7 @@ std::string get_process_info() {
   pylib::OpenDir("/proc").Traverse([&process_data](pylib::FileInfo &&info) {
     // Judge process file
     if (info.Name()[0] >= '0' && info.Name()[0] <= '9') {
-      auto stat = pylib::split(pylib::OpenFile("/proc/" + info.Name() + "/stat", false, O_RDONLY).Read(INT_MAX), " ");
+      auto stat = pylib::split(pylib::OpenFile("/proc/" + info.Name() + "/stat", false, O_RDONLY).Read(1024), " ");
       if (!stat[0].empty()) {
         std::string line = stat[0] + ","
                          + stat[1].substr(1, stat[1].size() - 2) + ","
@@ -153,7 +152,7 @@ std::string get_cpu_info() {
    timer.getyear(), timer.getmonth(), timer.getday(), timer.gethour(), timer.getminute(), timer.getsecond());
   cpu_data += std::string(buf);
   // Get CPU information
-  auto cpu = pylib::split(pylib::split(pylib::OpenFile("/proc/cpuinfo", false, O_RDONLY).Read(INT_MAX), "\n\n")[0], "\n");
+  auto cpu = pylib::split(pylib::split(pylib::OpenFile("/proc/cpuinfo", false, O_RDONLY).Read(4096), "\n\n")[0], "\n");
   for (int i = 0; i < cpu.size(); i++) {
     if (cpu[i].find("model name") != std::string::npos)
       cpu_data += "        CPU Name: " + cpu[i].substr(cpu[i].rfind(":") + 2) + "\n";
@@ -167,7 +166,7 @@ std::string get_cpu_info() {
       cpu_data += "Addressing digit: " + cpu[i].substr(cpu[i].rfind(":") + 2) + "\n";
   }
   // Get CPU use ratio
-  auto cpuUse = pylib::split(pylib::OpenFile("/proc/stat", false, O_RDONLY).Read(INT_MAX), "\n");
+  auto cpuUse = pylib::split(pylib::OpenFile("/proc/stat", false, O_RDONLY).Read(4096), "\n");
   auto cpu_use_data = pylib::split(cpuUse[0], " ");
   user = std::stoi(cpu_use_data[2]);
   nice = std::stoi(cpu_use_data[3]);
@@ -206,7 +205,7 @@ std::string get_memory_info() {
   sprintf(buf, "Time: %d-%d-%d %02d:%02d:%02d\n",
    timer.getyear(), timer.getmonth(), timer.getday(), timer.gethour(), timer.getminute(), timer.getsecond());
   mem_data += std::string(buf);
-  auto MemUse = pylib::split(pylib::OpenFile("/proc/meminfo", false, O_RDONLY).Read(INT_MAX), "\n");
+  auto MemUse = pylib::split(pylib::OpenFile("/proc/meminfo", false, O_RDONLY).Read(4096), "\n");
   for (int i = 0; i < MemUse.size(); i++) {
     if (MemUse[i].find("MemTotal") != std::string::npos) {
       auto tmp = pylib::split(MemUse[i], " ");
