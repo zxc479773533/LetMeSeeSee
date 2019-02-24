@@ -127,7 +127,7 @@ namespace srlib {
       auto buf = new char[size];
       auto count = ::read(_fd, buf, size);
       String res(buf, count);
-      delete buf;
+      delete[] buf;
       return res;
     }
     virtual ssize_t Read(Array<char> &buf) {

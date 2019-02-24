@@ -41,7 +41,7 @@ namespace srlib {
       return *this;
     }
     bool Connection::IsConnected() {return _connected;}
-    int Connection::Disconnect() {
+    void Connection::Disconnect() {
       if (_connected) {
         auto res = Close();
         if (res == 0)_connected = false;
