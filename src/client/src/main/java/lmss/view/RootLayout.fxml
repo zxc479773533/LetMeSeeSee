@@ -43,7 +43,7 @@
                <children>
                   <TextField fx:id="addressField" promptText="Address" />
                   <TextField fx:id="portField" prefHeight="23.0" prefWidth="66.0" promptText="Port" />
-                  <Button fx:id="connectButton" mnemonicParsing="false" onAction="#handleConnect" text="Connect" />
+                  <Button fx:id="connectButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleConnect" text="Connect" />
                </children>
             </HBox>
          </children>

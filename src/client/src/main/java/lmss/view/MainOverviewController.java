@@ -2,13 +2,16 @@ package lmss.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
 import lmss.MainApp;
 import lmss.model.FileNode;
 import lmss.model.SharedData;
 import lmss.utils.net.RequestCmd;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert.*;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class MainOverviewController {
     @FXML
@@ -29,6 +32,8 @@ public class MainOverviewController {
     private Button watchButton;
     @FXML
     private Button deleteButton;
+    @FXML
+    private Button saveButton;
 
     public static SharedData sharedData = new SharedData();
     private FileNode fileNode;
@@ -128,6 +133,34 @@ public class MainOverviewController {
             alert.setContentText("Ooops, there was an error!");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    private void handleSave() {
+        saveButton.setOnAction( (ActionEvent) -> {
+            FileChooser fileChooser = new FileChooser();
+            // Set extension filter
+            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("All files (*.*)", "*.*");
+            fileChooser.getExtensionFilters().add(extensionFilter);
+
+            // Show save file dialog
+            File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+            try {
+                OutputStream outputStream = new FileOutputStream(file);
+                OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+                writer.write(ValueLabel.toString());
+                writer.close();
+                outputStream.close();
+            }
+            catch (Exception exception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Look, an Error Dialog");
+                alert.setContentText("Ooops, there was an error!");
+                alert.showAndWait();
+            }
+        });
     }
 
 }
