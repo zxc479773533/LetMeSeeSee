@@ -1,0 +1,31 @@
+language: cpp
+
+matrix:
+  include:
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-7
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+install:
+  - cd src && cd server && mkdir build && cd build
+  - cmake -DCMAKE_BUILD_TYPE=Release ..
+  - make -j2
+
+script:
+  - cp ../run_test.sh ./
+  - ./run_test.sh
+
+before_install:
+  # Preparing path...
+  - eval "${MATRIX_EVAL}" && mkdir $HOME/usr && export PATH="$HOME/usr/bin:$PATH"
+  # Preparing cmake...
+  - wget https://cmake.org/files/v3.11/cmake-3.11.2-Linux-x86_64.sh && chmod +x cmake-3.11.2-Linux-x86_64.sh
+  - ./cmake-3.11.2-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
