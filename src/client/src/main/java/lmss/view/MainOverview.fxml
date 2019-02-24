@@ -75,8 +75,9 @@
                                                             </GridPane>
                                                             <FlowPane prefHeight="23.0" prefWidth="117.0">
                                                                <children>
-                                                                  <Button fx:id="watchButton" mnemonicParsing="false" onAction="#handleWatch" text="Watch" />
-                                                                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
+                                                                  <Button fx:id="watchButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleWatch" text="Watch" />
+                                                                  <Button fx:id="deleteButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDelete" text="Delete" />
+                                                                  <Button fx:id="saveButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="49.0" text="Save" />
                                                                </children>
                                                             </FlowPane>
                                                          </children>

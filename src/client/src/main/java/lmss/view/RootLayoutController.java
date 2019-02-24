@@ -63,8 +63,8 @@ public class RootLayoutController {
         connectButton.setOnAction( (ActionEvent event) -> {
             fileNodeList = mainApp.getFileNodeData();
             fileNodeList.clear();
-            if (addressField.getText().isEmpty() || !RequestCmd.isHttpUrl(addressField.getText())) {
-                setLogArea("请检查URL格式, 示例：https://www.baidu.com");
+            if (addressField.getText().isEmpty() || !RequestCmd.isHttpUrl("http://"+addressField.getText())) {
+                setLogArea("请检查URL格式, 示例：123.123.123.123");
                 addressField.clear();
             }
             else if (Integer.parseInt(portField.getText()) < 1 ||
@@ -74,7 +74,7 @@ public class RootLayoutController {
             }
             else if ((addressField.getText() != null &&
                      !addressField.getText().isEmpty())) {
-                server_address = addressField.getText() + ":" + portField.getText();
+                server_address = "http://"+addressField.getText() + ":" + portField.getText();
                 sharedData.setServerUrl(server_address);
                 RequestCmd requestCmd = new RequestCmd();
                 try {
