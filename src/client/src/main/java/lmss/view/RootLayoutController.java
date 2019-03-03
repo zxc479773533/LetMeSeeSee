@@ -6,8 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
 
@@ -175,6 +175,54 @@ public class RootLayoutController {
 
     }
 
+
+    @FXML
+    private void handleSaveLog() {
+        FileChooser fileChooser = new FileChooser();
+
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(
+                "Log files (*.log)", "*.log"
+        );
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
+        try {
+            OutputStream outputStream = new FileOutputStream(file);
+            OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
+            writer.write(logArea.getText());
+            writer.close();
+            outputStream.close();
+        }
+        catch (FileNotFoundException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("File Error Dialog");
+            alert.setContentText("File not found!");
+            alert.showAndWait();
+        }
+        catch (IOException exception) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("IO Error Dialog");
+            alert.setContentText("IO error");
+            alert.showAndWait();
+        }
+        catch (NullPointerException NullEx) {
+
+        }
+    }
+
+    @FXML
+    private void handleHelp() {
+        mainApp.showHelpDialog();
+    }
+
+    @FXML
+    private void handleAbout() {
+        mainApp.showAboutDialog();
+    }
+
     @FXML
     private void handleExit() {
 
@@ -183,7 +231,7 @@ public class RootLayoutController {
 
     private void setLogArea(String log) {
         Date time = new Date();
-        logArea.appendText("\n["+time.toString()+"]:"+log);
+        logArea.appendText("\n["+time.toString()+"]:"+"\n"+log);
     }
 
 

@@ -8,13 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import lmss.model.FileNode;
 import lmss.model.NodeListWrapper;
+import lmss.view.AboutDialogController;
+import lmss.view.HelpDialogController;
 import lmss.view.MainOverviewController;
 import lmss.view.RootLayoutController;
-import org.controlsfx.dialog.ExceptionDialog;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -52,7 +54,7 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Let Me See See");
-
+        //this.primaryStage.initStyle(StageStyle.UNIFIED);
         initRootLayout();
 
         showMainOverview();
@@ -182,6 +184,50 @@ public class MainApp extends Application {
             alert.setHeaderText("Look, an Error Dialog");
             alert.setContentText("Ooops, there was an error!");
             alert.showAndWait();
+        }
+    }
+
+    public void showHelpDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/HelpDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Help");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            HelpDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showAboutDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("/view/AboutDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("About");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            AboutDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

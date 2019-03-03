@@ -12,11 +12,22 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.RootLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.RootLayoutController">
+   <bottom>
+      <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="227.0" prefWidth="640.0" text="Log">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextArea fx:id="logArea" editable="false" layoutX="24.0" layoutY="-20.0" prefHeight="101.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </bottom>
    <top>
-      <FlowPane prefHeight="14.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <FlowPane prefHeight="21.0" prefWidth="661.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar fx:id="menuBar">
+            <MenuBar fx:id="menuBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="272.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
@@ -29,35 +40,25 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleSaveLog" text="Save Log" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
-            <HBox prefHeight="25.0" prefWidth="296.0">
+            <HBox>
                <children>
-                  <TextField fx:id="addressField" promptText="Address" />
-                  <TextField fx:id="portField" prefHeight="23.0" prefWidth="66.0" promptText="Port" />
-                  <Button fx:id="connectButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleConnect" text="Connect" />
+                  <TextField fx:id="addressField" prefHeight="23.0" prefWidth="172.0" promptText="Address" />
+                  <TextField fx:id="portField" prefHeight="23.0" prefWidth="69.0" promptText="Port" />
+                  <Button fx:id="connectButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleConnect" prefHeight="23.0" prefWidth="126.0" text="Connect" />
                </children>
             </HBox>
          </children>
       </FlowPane>
    </top>
-   <bottom>
-      <TitledPane animated="false" prefHeight="125.0" prefWidth="600.0" text="Log">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <TextArea fx:id="logArea" editable="false" layoutX="24.0" layoutY="-20.0" prefHeight="101.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </TitledPane>
-   </bottom>
 </BorderPane>

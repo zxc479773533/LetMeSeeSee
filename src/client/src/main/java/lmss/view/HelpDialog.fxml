@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.HelpDialogController">
+   <children>
+      <TextArea editable="false" layoutY="1.0" prefHeight="400.0" prefWidth="600.0" text="帮助：&#10;输入远程服务器IP与对应开放端口，点击&quot;connect&quot;连接至服务端后，会看见左侧列表出现服务端发回的数据列表。&#10;可使用右侧&quot;watch&quot;按钮获取具体数据值，&quot;delete&quot;按钮可删除目前选中的数据节点，&quot;save&quot;按钮可以data name作为默认文件名保存当前数据值&#10;菜单中File目录中操作皆用于保存与加载节点列表，Edit中选项可保存log内容。About中为该帮助与版权说明等内容。" wrapText="true" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+         <font>
+            <Font name="Microsoft YaHei" size="20.0" />
+         </font>
+      </TextArea>
+   </children>
+</AnchorPane>
