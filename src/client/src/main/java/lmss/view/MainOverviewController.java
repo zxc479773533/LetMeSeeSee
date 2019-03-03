@@ -140,25 +140,35 @@ public class MainOverviewController {
         saveButton.setOnAction( (ActionEvent) -> {
             FileChooser fileChooser = new FileChooser();
             // Set extension filter
-            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("All files (*.*)", "*.*");
+            FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(
+                    "All files (*.*)", ".");
             fileChooser.getExtensionFilters().add(extensionFilter);
-
+            fileChooser.setInitialFileName(nodeNameLabel.getText());
             // Show save file dialog
             File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 
             try {
                 OutputStream outputStream = new FileOutputStream(file);
                 OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-                writer.write(ValueLabel.toString());
+                writer.write(ValueLabel.getText());
                 writer.close();
                 outputStream.close();
             }
-            catch (Exception exception) {
+            catch (FileNotFoundException FileException) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
                 alert.setHeaderText("Look, an Error Dialog");
                 alert.setContentText("Ooops, there was an error!");
                 alert.showAndWait();
+            }
+            catch (IOException IOexception) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setHeaderText("Look, an Error Dialog");
+                alert.showAndWait();
+            }
+            catch (NullPointerException NullEx) {
+
             }
         });
     }
