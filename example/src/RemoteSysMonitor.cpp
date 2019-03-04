@@ -25,19 +25,19 @@ std::string get_memory_info();
 
 
 // ----- Here add the store function -----
-Store(Process_Info, Process Information Table) {
+Store(Process_Info, process_info.csv) {
   std::string SaveFile = datadir + "/process_info.csv";
   pylib::WriteFile(SaveFile, get_process_info());
   return SaveFile;
 }
 
-Store(CPU_Info, CPU Information) {
+Store(CPU_Info, cpu_info.txt) {
   std::string SaveFile = datadir + "/cpu_info.txt";
   pylib::WriteFile(SaveFile, get_cpu_info());
   return SaveFile;
 }
 
-Store(Memory_Info, Memory Use Information) {
+Store(Memory_Info, memory_info.txt) {
   std::string SaveFile = datadir + "/memory_info.txt";
   pylib::WriteFile(SaveFile, get_memory_info());
   return SaveFile;
