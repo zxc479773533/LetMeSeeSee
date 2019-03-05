@@ -1,6 +1,6 @@
 # LetMeSeeSee <a href="http://www.kernel.org"><img alt="Platform (GNU/Linux)" src="https://img.shields.io/badge/platform-GNU/Linux-blue.svg"></a> [![Build Status](https://travis-ci.com/zxc479773533/LetMeSeeSee.svg?token=5zDzDfTUA9XfQtccPmCX&branch=master)](https://travis-ci.com/zxc479773533/LetMeSeeSee)
 
-[English](https://github.com/zxc479773533/LetMeSeeSee) | [中文](https://github.com/zxc479773533/LetMeSeeSee/blob/master/README_CN.md)
+English | [中文](https://github.com/zxc479773533/LetMeSeeSee/blob/master/README_CN.md)
 
 ## About
 
@@ -117,7 +117,7 @@ Options:
 
 ### Clinet
 
-We also provide a companion client developed by `Java`, you can download the latest version in [release] (https://github.com/zxc479773533/LetMeSeeSee/releases).
+We also provide a companion client developed by `Java`, you can download the latest version in [release](https://github.com/zxc479773533/LetMeSeeSee/releases).
 
 <div align="center">
   <img src="img/client.jpg">
