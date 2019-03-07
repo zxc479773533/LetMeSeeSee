@@ -143,7 +143,7 @@ public class MainOverviewController {
             FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(
                     "All files (*.*)", ".");
             fileChooser.getExtensionFilters().add(extensionFilter);
-            fileChooser.setInitialFileName(nodeNameLabel.getText());
+            fileChooser.setInitialFileName(dataNameLabel.getText());
             // Show save file dialog
             File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
 

@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.RootLayoutController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.RootLayoutController">
    <bottom>
-      <TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="227.0" prefWidth="640.0" text="Log">
+      <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="227.0" prefWidth="640.0" text="Log">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -43,9 +43,8 @@
                     <MenuItem mnemonicParsing="false" onAction="#handleSaveLog" text="Save Log" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu mnemonicParsing="false" text="About">
                   <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                     <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
                   </items>
                 </Menu>

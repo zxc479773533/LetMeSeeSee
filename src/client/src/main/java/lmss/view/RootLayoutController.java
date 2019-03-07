@@ -214,11 +214,6 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleHelp() {
-        mainApp.showHelpDialog();
-    }
-
-    @FXML
     private void handleAbout() {
         mainApp.showAboutDialog();
     }

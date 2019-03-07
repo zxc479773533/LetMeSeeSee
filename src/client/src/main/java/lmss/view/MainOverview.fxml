@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.MainOverviewController">
    <children>
@@ -49,34 +49,48 @@
                                  <children>
                                     <VBox layoutX="-1.0" layoutY="19.600000381469727" prefHeight="318.85714285714283" prefWidth="115.42857142857143" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <GridPane prefHeight="182.0" prefWidth="96.0">
+                                          <GridPane prefHeight="254.0" prefWidth="198.0">
                                             <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="73.42855834960938" minHeight="10.0" prefHeight="71.14285278320312" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="80.4285888671875" minHeight="10.0" prefHeight="67.85714721679688" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="114.85711669921875" minHeight="10.0" prefHeight="114.85711669921875" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="dataName" GridPane.rowIndex="1" />
+                                                <Label text="dataName" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Label fx:id="dataNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Value" GridPane.rowIndex="2" />
+                                                <Label text="Value" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Label fx:id="ValueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Label text="nodeName" />
+                                                <Label text="nodeName">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Label>
                                                 <Label fx:id="nodeNameLabel" text="Label" GridPane.columnIndex="1" />
                                              </children>
                                           </GridPane>
-                                          <FlowPane prefHeight="23.0" prefWidth="117.0">
+                                          <FlowPane>
                                              <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="198.0">
-                                                   <children>
-                                                      <Button fx:id="watchButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleWatch" prefHeight="23.0" prefWidth="65.0" text="Watch" />
-                                                      <Button fx:id="deleteButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="66.0" text="Delete" />
-                                                      <Button fx:id="saveButton" focusTraversable="false" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="68.0" text="Save" />
-                                                   </children>
-                                                </HBox>
+                                                <Button fx:id="watchButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleWatch" prefHeight="23.0" prefWidth="65.0" text="Watch">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Button>
+                                                <Button fx:id="deleteButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="66.0" text="Delete">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Button>
+                                                <Button fx:id="saveButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="67.0" text="Save">
+                                                   <font>
+                                                      <Font name="Courier New Bold" size="12.0" />
+                                                   </font></Button>
                                              </children>
                                           </FlowPane>
                                        </children>

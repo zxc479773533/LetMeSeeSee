@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>lmss</groupId>
-    <artifactId>LmssClient</artifactId>
-    <version>v1.5</version>
+    <artifactId>LetMeSeeSee-Client</artifactId>
+    <version>v1.2</version>
     <dependencies>
         <!--https://mvnrepository.com/artifact/com.google.code.gson/gson-->
         <dependency>
@@ -53,8 +53,9 @@
                 <configuration>
                     <vendor>lmss</vendor>
                     <mainClass>lmss.MainApp</mainClass>
+                    <deployDir>${project.basedir}/src/main/deploy</deployDir>
+                    <appName>${project.artifactId}</appName>
 
-                    <appName>LmssClient</appName>
                 </configuration>
             </plugin>
 
@@ -78,7 +79,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>lmss.Main</mainClass>
+                            <mainClass>lmss.MainApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -87,7 +88,7 @@
                         <id>make-assembly</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>assembly</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -112,6 +113,7 @@
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*.fxml</include>
+                                        <include>**/*.css</include>
                                     </includes>
                                 </resource>
                             </resources>

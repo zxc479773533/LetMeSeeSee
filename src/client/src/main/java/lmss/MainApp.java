@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import lmss.model.FileNode;
 import lmss.model.NodeListWrapper;
 import lmss.view.AboutDialogController;
-import lmss.view.HelpDialogController;
 import lmss.view.MainOverviewController;
 import lmss.view.RootLayoutController;
 
@@ -187,32 +186,11 @@ public class MainApp extends Application {
         }
     }
 
-    public void showHelpDialog() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("/view/HelpDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Help");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            HelpDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            dialogStage.showAndWait();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void showAboutDialog() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/AboutDialog.fxml"));
+            //about = FXMLLoader.load(getClass().getResource("/view/AboutDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
 
             Stage dialogStage = new Stage();
@@ -220,6 +198,8 @@ public class MainApp extends Application {
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(getClass().getResource("/view/DefaultTheme.css").toExternalForm());
+
             dialogStage.setScene(scene);
 
             AboutDialogController controller = loader.getController();
