@@ -18,8 +18,13 @@ You can use our library in your server code to launch a remote service with just
 
 ### Dependencies
 
+#### Server
+
 We recommend that you use the `CMAKE` tool of `3.10` or higher and `gcc` of version 7.0 and above to get a better use of the build experience. This does not mean that the tool cannot be used in an environment that does not meet the version requirements, but a low-level compilation tool may cause some unexpected errors in some environments.
 
+#### Clinet
+
+We recommend to install the `Java 8` environment. Higher versions require manual installation of the `Javafx` package.
 
 ### Install
 
@@ -81,7 +86,6 @@ int main(int argc, char **argv) {
   // Start the network service and listen on port 1234
   storager.ListenAndServe("0.0.0.0", 1234);
 
-  pylib::Clock timer;
   while (true) {
   
     // Do your operations
@@ -142,4 +146,4 @@ We will continue to maintain this project and may update or reproduce the client
 
 Copyright (c) 2018 zxcpyp, 金修旭, Lab-Zjt
 
-Updated at 2019-03-05
+Updated at 2019-03-07
