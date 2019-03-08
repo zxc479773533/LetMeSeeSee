@@ -131,6 +131,16 @@ The client can establish a connection with the server by inputting the `IP addre
 
 The server can allow up to 20 clients to access at the same time.
 
+If you use our server library in your project and want to develop the corresponding client interface, please pay attention to the following data format.
+
+```
+HTTP Request:
+Header: CMD == nodelist or CMD == "node name"
+
+HTTP Response:
+Content: "Data"
+```
+
 ## Developers
 
 * [zxcpyp](https://github.com/zxc479773533)

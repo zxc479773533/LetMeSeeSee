@@ -131,4 +131,14 @@ Options:
 
 服务端最大允许同时接入20个客户端。
 
+如果您在您的工程中应用了我们服务端的库，想自行开发对应的客户端接口，请注意以下数据格式：
+
+```
+HTTP Request:
+Header: CMD == nodelist or CMD == "node name"
+
+HTTP Response:
+Content: "Data"
+```
+
 中文文档更新于2019-03-07
