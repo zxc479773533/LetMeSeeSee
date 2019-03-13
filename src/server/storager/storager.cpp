@@ -8,6 +8,7 @@
 #include "../net/connection.h"
 #include "../net/request.h"
 #include "../utility/logger.h"
+#include "../utility/md5.h"
 
 using namespace srlib::log;
 
@@ -51,6 +52,9 @@ namespace lmss {
     });
     Log.Logln("Scan Source Code End. Found " + std::to_string(_node_list.size()) + " Node(s).");
   }
+  void Storager::SetPassword(const std::string &password) {
+    _password = srlib::MD5::Hash(password);
+  }
   std::atomic<int> client_count;
   void Storager::ListenAndServe(const std::string &ip, uint16_t port) {
     using namespace srlib;
@@ -69,13 +73,24 @@ namespace lmss {
           continue;
         }
         client_count++;
-        std::thread([](std::shared_ptr<net::Connection> conn, const String &json) {
+        std::thread([](std::shared_ptr<net::Connection> conn, const String &json, const std::string &password) {
           auto addr = conn->GetAddress().Ip() + ":" + std::to_string(conn->GetAddress().Port());
           Log.Logln("Connection from " + addr.std_string());
           while (true) {
             auto req = net::RecvHTTPRequest(*conn);
             if (req.version.empty()) {
               Log.Logln(addr.std_string() + " Receive HTTP Request Failed.");
+              break;
+            }
+            // Password Verification
+            if (req.header["Password"] != password) {
+              Log.Logln(addr.std_string() + "Error Password.");
+              net::SendHTTPResponse(*conn,
+                                    net::HTTPResponse{}.Version("1.1")
+                                                       .StatusCode("404")
+                                                       .Header("Content-Length", std::to_string(13))
+                                                       .ReasonPhrase("Not Found")
+                                                       .Content("404 not found"));
               break;
             }
             // No Command
@@ -113,7 +128,7 @@ namespace lmss {
             }
           }
           client_count--;
-        }, conn, json).detach();
+        }, conn, json, _password).detach();
       }
     }).detach();
   }

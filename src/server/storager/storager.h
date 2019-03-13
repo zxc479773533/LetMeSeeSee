@@ -28,6 +28,8 @@ namespace lmss {
   private:
     // json格式的节点列表。
     std::vector<std::string> _node_list;
+    std::string _password;
+    
   public:
     // 注册函数，将一个函数注册到Reflector中。一般来说只会通过Store宏被调用。
     static void Register(const std::string &name, store_t func) {reflector::GetInstance()[name] = func;}
@@ -36,6 +38,8 @@ namespace lmss {
     void ListenAndServe(const std::string &ip, uint16_t port);
     // 扫描源码，并将所有数据储存节点转换为json格式保存。
     void ScanSourceCode(const std::string &path);
+    // 设置密码，如果不设置或者设置为空，则允许任何用户连接。
+    void SetPassword(const std::string& password);
     // 返回节点列表。
     std::vector<std::string> &GetNodeList() {return _node_list;}
     // 设置日志文件，默认为std::clog，如果为空则不打印日志。
