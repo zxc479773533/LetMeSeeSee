@@ -52,19 +52,25 @@ int main(int argc, char **argv) {
   lmss::Storager storager;
 
   // Handle arguments
-  std::string srcfile, logfile;
+  std::string srcfile, logfile, addr, port, password;
   int local = 0;
   int freq = 1;
   pylib::CmdParser parser(argc, argv);
   while (parser.NowPos() < parser.OperateNum()) {
     std::queue<std::string> arg_list;
     std::string op = parser.Next(arg_list);
-    if (op == "source")
+    if (op == "source" || op == "s")
       srcfile = arg_list.front();
-    else if (op == "datadir")
+    else if (op == "datadir" || op == "d")
       datadir = arg_list.front();
-    else if (op == "logfile")
+    else if (op == "addr" || op == "a")
+      addr = arg_list.front();
+    else if (op == "port" || op == "p")
+      port = arg_list.front();
+    else if (op == "logfile" || op == "l")
       logfile = arg_list.front();
+    else if (op == "password" || op == "pd")
+      password = arg_list.front();
     else if (op == "local") {
       local = 1;
       freq = std::stoi(arg_list.front());
@@ -74,18 +80,28 @@ int main(int argc, char **argv) {
       exit(0);
     }
   }
-  if (srcfile.empty() || datadir.empty()) {
+
+  // Required data
+  if (srcfile.empty() || datadir.empty() || port.empty()) {
     print_usage();
     exit(0);
+  }
+
+  if (addr.empty()) {
+    addr = "0.0.0.0";
   }
   if (!logfile.empty()) {
     storager.SetLogFile(logfile);
   }
+  if (!password.empty()) {
+    storager.SetPassword(password);
+  }
+
 
   // Specify the source directory
   storager.ScanSourceCode(srcfile);
   // Start the server
-  storager.ListenAndServe("0.0.0.0", 1234);
+  storager.ListenAndServe(addr, std::stoi(port));
 
   pylib::Clock timer;
   while (true) {
@@ -101,10 +117,13 @@ int main(int argc, char **argv) {
 void print_usage() {
   pylib::println("Usage: ./RemoteSM [Options]");
   pylib::println("Options:");
-  pylib::println("  --source  <dir> : Specify source directory [Required]");
-  pylib::println("  --datadir <dir> : Specify the savedata directory [Required]");
-  pylib::println("  --logfile <dir> : Specify the log output directory");
-  pylib::println("  --local  <freq> : Store data by frequency");
+  pylib::println("  --source   -s   <dir> : Specify source directory [Required]");
+  pylib::println("  --datadir  -d   <dir> : Specify the savedata directory [Required]");
+  pylib::println("  --addr     -a  <addr> : Specify the listen address (The default is 0.0.0.0)");
+  pylib::println("  --port     -p  <port> : Specify the savedata directory [Required]");
+  pylib::println("  --logfile  -l  <file> : Specify the log output directory");
+  pylib::println("  --password -pd <file> : Specify the log output directory");
+  pylib::println("  --local        <freq> : Store data by frequency");
 }
 
 std::string get_process_info() {

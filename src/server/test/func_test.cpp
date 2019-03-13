@@ -27,6 +27,7 @@ Store(Save_test2, test2) {
 // Using time command to calculate time
 int main(int argc, char **argv) {
   lmss::Storager storager;
+  storager.SetLogFile("test.log");
   if (argc != 1) {
     storager.ScanSourceCode(argv[1]);
     auto nodelist_file = srlib::OpenFile("scan_test.json");
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
   for (auto &node : storager.GetNodeList()) {
     nodelist_file.Write(node);
   }
+  storager.SetPassword("zxc123!@#");
   storager.ListenAndServe("0.0.0.0", 11111);
   test1 = 0;
   char ch = 'A';
