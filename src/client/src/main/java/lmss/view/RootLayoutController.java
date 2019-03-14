@@ -18,6 +18,7 @@ import lmss.model.FileNode;
 import lmss.model.NodeListBean;
 import lmss.utils.net.RequestCmd;
 import lmss.view.MainOverviewController;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import static lmss.view.MainOverviewController.sharedData;
 
@@ -32,6 +33,9 @@ public class RootLayoutController {
     private TextField addressField;
     @FXML
     private TextField portField;
+    @FXML
+    private PasswordField passwordField;
+
     @FXML
     private Button connectButton;
     @FXML
@@ -48,18 +52,21 @@ public class RootLayoutController {
         //更新log
         sharedData.messageProperty().addListener(
                 (observable, oldValue, newValue) -> setLogArea(sharedData.getMessage()));
+
+        passwordField.textProperty().addListener(((observable, oldValue, newValue) -> sharedData.setPassword(passwordField.getText())));
     }
 
     public void setMainApp(MainApp mainApp) {
 
         this.mainApp = mainApp;
+        fileNodeList = mainApp.getFileNodeData();
     }
 
     public RootLayoutController() {
     }
 
     @FXML
-    public void handleConnect() {
+    private void handleConnect() {
         connectButton.setOnAction( (ActionEvent event) -> {
             fileNodeList = mainApp.getFileNodeData();
             fileNodeList.clear();
@@ -72,17 +79,24 @@ public class RootLayoutController {
                 setLogArea("端口号越界！");
                 portField.clear();
             }
+            else if (passwordField.getText().isEmpty()) {
+                setLogArea("密码为空！");
+                passwordField.clear();
+            }
             else if ((addressField.getText() != null &&
                      !addressField.getText().isEmpty())) {
                 server_address = "http://"+addressField.getText() + ":" + portField.getText();
                 sharedData.setServerUrl(server_address);
+                sharedData.setPassword(passwordField.getText());
                 RequestCmd requestCmd = new RequestCmd();
                 try {
                     Gson gson = new GsonBuilder().setLenient().create();
-                    String getResponse = requestCmd.run(server_address, "nodelist");
+                    String getResponse = requestCmd.run(server_address, "nodelist", passwordField.getText());
+                    System.out.println(DigestUtils.md5Hex(passwordField.getText()));
                     if (getResponse.equals("NullPointerException!")
                             || getResponse.equals("ConnectException!")
-                            || getResponse.equals("IOException!")) {
+                            || getResponse.equals("IOException!")
+                            || getResponse.equals("密码错误")) {
                         setLogArea(getResponse);
                     }
                     else {
@@ -91,7 +105,7 @@ public class RootLayoutController {
                         fileNodeList = mainApp.getFileNodeData();
                         for (NodeListBean node: nodeList) {
                             for (String dataName: node.dataName) {
-                                fileNodeList.add(new FileNode(node.nodeName, dataName, null));
+                                fileNodeList.add(new FileNode(node.nodeName, dataName, null, addressField.getText(), portField.getText(), passwordField.getText()));
                             }
                         }
                     }
@@ -134,6 +148,12 @@ public class RootLayoutController {
         if (file != null) {
             mainApp.loadNodeDataFromFile(file);
         }
+        String ipTmp = fileNodeList.get(1).getServerIP();
+        String portTmp = fileNodeList.get(1).getPort();
+        setAddressField(ipTmp);
+        setPortField(portTmp);
+        server_address = "http://"+addressField.getText() + ":" + portField.getText();
+        sharedData.setServerUrl(server_address);
     }
 
     /**
@@ -229,5 +249,12 @@ public class RootLayoutController {
         logArea.appendText("\n["+time.toString()+"]:"+"\n"+log);
     }
 
+    private void setAddressField(String server_address) {
+        addressField.setText(server_address);
+        this.server_address = server_address;
+    }
 
+    private void setPortField(String port) {
+        portField.setText(port);
+    }
 }

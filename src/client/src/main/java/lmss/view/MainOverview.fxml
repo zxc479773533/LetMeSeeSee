@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.MainOverviewController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lmss.view.MainOverviewController">
    <children>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="415.0" prefWidth="673.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -62,36 +63,54 @@
                                              <children>
                                                 <Label text="dataName" GridPane.rowIndex="1">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
+                                                      <Font name="Calibri" size="12.0" />
                                                    </font></Label>
-                                                <Label fx:id="dataNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="dataNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <font>
+                                                      <Font name="Calibri" size="12.0" />
+                                                   </font></Label>
                                                 <Label text="Value" GridPane.rowIndex="2">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
+                                                      <Font name="Calibri" size="12.0" />
                                                    </font></Label>
-                                                <Label fx:id="ValueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label fx:id="ValueLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <font>
+                                                      <Font name="Calibri" size="12.0" />
+                                                   </font></Label>
                                                 <Label text="nodeName">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
+                                                      <Font name="Calibri" size="12.0" />
                                                    </font></Label>
-                                                <Label fx:id="nodeNameLabel" text="Label" GridPane.columnIndex="1" />
+                                                <Label fx:id="nodeNameLabel" text="Label" GridPane.columnIndex="1">
+                                                   <font>
+                                                      <Font name="Calibri" size="12.0" />
+                                                   </font></Label>
                                              </children>
                                           </GridPane>
-                                          <FlowPane>
+                                          <FlowPane hgap="3.0">
                                              <children>
                                                 <Button fx:id="watchButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleWatch" prefHeight="23.0" prefWidth="65.0" text="Watch">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
-                                                   </font></Button>
-                                                <Button fx:id="deleteButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="66.0" text="Delete">
+                                                      <Font name="Calibri" size="12.0" />
+                                                   </font>
+                                                   <FlowPane.margin>
+                                                      <Insets />
+                                                   </FlowPane.margin></Button>
+                                                <Button fx:id="deleteButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleDelete" prefHeight="23.0" prefWidth="60.0" text="Delete">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
-                                                   </font></Button>
+                                                      <Font name="Calibri" size="12.0" />
+                                                   </font>
+                                                   <FlowPane.margin>
+                                                      <Insets />
+                                                   </FlowPane.margin></Button>
                                                 <Button fx:id="saveButton" focusTraversable="false" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSave" prefHeight="23.0" prefWidth="67.0" text="Save">
                                                    <font>
-                                                      <Font name="Courier New Bold" size="12.0" />
+                                                      <Font name="Calibri" size="12.0" />
                                                    </font></Button>
                                              </children>
+                                             <VBox.margin>
+                                                <Insets />
+                                             </VBox.margin>
                                           </FlowPane>
                                        </children>
                                     </VBox>

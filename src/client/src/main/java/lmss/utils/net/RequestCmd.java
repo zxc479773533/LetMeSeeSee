@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lmss.model.SharedData;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * the class that is used to request node list or a single node data
@@ -21,15 +22,22 @@ import lmss.model.SharedData;
 public class RequestCmd {
     private OkHttpClient client = new OkHttpClient.Builder().retryOnConnectionFailure(true).connectTimeout(30, TimeUnit.SECONDS).build();
 
-    public String run(String url, String cmd) throws IOException {
+    public String run(String url, String cmd, String password) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .header("CMD", cmd)
+                .addHeader("Password", DigestUtils.md5Hex(password))
                 .addHeader("Connection", "close")
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
+            if (response.code() == 404) {
+                System.out.println("Wrong password!");
+                return "密码错误";
+            }
+            else {
+                return response.body().string();
+            }
         } catch (NullPointerException e) {
             System.out.println("NullPointerException!");
             return "NullPointerException!";
@@ -51,9 +59,6 @@ public class RequestCmd {
         Pattern pat = Pattern.compile(regex.trim());
         Matcher mat = pat.matcher(urls.trim());
         isUrl = mat.matches();
-        if (isUrl) {
-            isUrl = true;
-        }
         return isUrl;
     }
 }

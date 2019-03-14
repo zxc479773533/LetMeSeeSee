@@ -3,6 +3,7 @@ package lmss;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -11,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.stage.WindowEvent;
 import lmss.model.FileNode;
 import lmss.model.NodeListWrapper;
 import lmss.view.AboutDialogController;
@@ -22,6 +24,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 
@@ -30,6 +33,7 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<FileNode> fileNodeData = FXCollections.observableArrayList();
+    private Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
 
     /**
      * Constructor
@@ -57,9 +61,20 @@ public class MainApp extends Application {
         initRootLayout();
 
         showMainOverview();
+
+        primaryStage.setOnHiding(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                try {
+                    prefs.removeNode();
+                } catch (BackingStoreException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        });
     }
 
-    public void initRootLayout() {
+    private void initRootLayout() {
         try {
             // Load root Layout from fxml file
             FXMLLoader loader = new FXMLLoader();
@@ -80,7 +95,7 @@ public class MainApp extends Application {
         }
     }
 
-    public void showMainOverview() {
+    private void showMainOverview() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource("/view/MainOverview.fxml"));
@@ -108,7 +123,6 @@ public class MainApp extends Application {
      * @return
      */
     public File getNodeListFilePath() {
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         String filePath = prefs.get("filePath", null);
         if (filePath != null) {
             return new File(filePath);
@@ -118,7 +132,6 @@ public class MainApp extends Application {
     }
 
     public void setNodeListFilePath(File file) {
-        Preferences prefs = Preferences.userNodeForPackage(MainApp.class);
         if (file != null) {
             prefs.put("filePath", file.getPath());
 
@@ -149,6 +162,7 @@ public class MainApp extends Application {
 
             fileNodeData.clear();
             fileNodeData.addAll(wrapper.getNodes());
+
 
             //Save the file path ro the registry.
             setNodeListFilePath(file);

@@ -96,10 +96,12 @@ public class MainOverviewController {
     @FXML
     private void handleWatch() {
         watchButton.setOnAction( (ActionEvent event) -> {
-            if (sharedData.getServerUrl() != null && !sharedData.getServerUrl().isEmpty()) {
+            if (sharedData.getServerUrl() != null
+                    && !sharedData.getServerUrl().isEmpty()
+                    && sharedData.getPassword() != null) {
                 RequestCmd requestCmd = new RequestCmd();
                 try {
-                    String data = requestCmd.run(sharedData.getServerUrl(), nodeNameLabel.getText());
+                    String data = requestCmd.run(sharedData.getServerUrl(), nodeNameLabel.getText(), sharedData.getPassword());
                     sharedData.setMessage(data);
                     fileNode.setValue(data);
                     ValueLabel.setText(fileNode.getValue());
@@ -112,6 +114,12 @@ public class MainOverviewController {
                     alert.setContentText("Ooops, there was an error!");
                     alert.showAndWait();
                 }
+            }
+            else if (sharedData.getPassword() == null || sharedData.getPassword().isEmpty()) {
+                sharedData.setMessage("错误：密码为空");
+            }
+            else if (sharedData.getServerUrl().isEmpty()) {
+                sharedData.setMessage("错误：Url为空");
             }
             else {
                 sharedData.setMessage("error");
