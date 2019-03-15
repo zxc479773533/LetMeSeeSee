@@ -56,6 +56,8 @@ class Storager {
     void ScanSourceCode(const std::string &path);
     // 设置日志文件，如果不调用该函数，默认为std::clog，如果参数为空则不打印日志
     void SetLogFile(const std::string &filename);
+    // 设置密码，如果不设置或者设置为空，则允许任何用户连接。
+    void SetPassword(const std::string& password);
   };
 ```
 
@@ -113,10 +115,13 @@ make
 ```txt
 Usage: ./RemoteSM [Options]
 Options:
-  --source  <dir> : Specify source directory [Required]
-  --datadir <dir> : Specify the savedata directory [Required]"
-  --logfile <dir> : Specify the log output directory"
-  --local  <freq> : Store data by frequency"
+  --source   -s   <dir> : Specify source directory [Required]
+  --datadir  -d   <dir> : Specify the savedata directory [Required]
+  --addr     -a  <addr> : Specify the listen address (The default is 0.0.0.0)
+  --port     -p  <port> : Specify the savedata directory [Required]
+  --logfile  -l  <file> : Specify the log output directory
+  --password -pd <file> : Specify the log output directory
+  --local        <freq> : Store data by frequency
 ```
 
 ### Clinet
@@ -124,7 +129,7 @@ Options:
 我们还提供了一个基于`Java`开发的一个配套客户端，您可以在[release](https://github.com/zxc479773533/LetMeSeeSee/releases)内下载最新版本。
 
 <div align="center">
-  <img src="img/client.jpg">
+  <img src="img/client.png">
 </div>
 
 客户端可以通过输入服务端的`IP地址`和`端口号`来和服务端建立连接，获取数据存储节点，并对相应的节点请求数据存储。
@@ -141,4 +146,4 @@ HTTP Response:
 Content: "Data"
 ```
 
-中文文档更新于2019-03-07
+中文文档更新于2019-03-15

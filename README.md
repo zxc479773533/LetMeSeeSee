@@ -56,6 +56,8 @@ class Storager {
     void ScanSourceCode(const std::string &path);
     // Set the log file. If you do not call this function, the default is std::clog. If the parameter is empty, the log will not be printed.
     void SetLogFile(const std::string &filename);
+    // Set the password. If you do not call this function, all any user connection
+    void SetPassword(const std::string& password);
   };
 ```
 
@@ -113,10 +115,13 @@ When running `RemoteSM`, add different parameters to enable the following functi
 ```txt
 Usage: ./RemoteSM [Options]
 Options:
-  --source  <dir> : Specify source directory [Required]
-  --datadir <dir> : Specify the savedata directory [Required]"
-  --logfile <dir> : Specify the log output directory"
-  --local  <freq> : Store data by frequency"
+  --source   -s   <dir> : Specify source directory [Required]
+  --datadir  -d   <dir> : Specify the savedata directory [Required]
+  --addr     -a  <addr> : Specify the listen address (The default is 0.0.0.0)
+  --port     -p  <port> : Specify the savedata directory [Required]
+  --logfile  -l  <file> : Specify the log output directory
+  --password -pd <file> : Specify the log output directory
+  --local        <freq> : Store data by frequency
 ```
 
 ### Clinet
@@ -124,7 +129,7 @@ Options:
 We also provide a companion client developed by `Java`, you can download the latest version in [release](https://github.com/zxc479773533/LetMeSeeSee/releases).
 
 <div align="center">
-  <img src="img/client.jpg">
+  <img src="img/client.png">
 </div>
 
 The client can establish a connection with the server by inputting the `IP address` and `port number` of the server, acquire the data storage node, and request data storage for the corresponding node.
@@ -156,4 +161,12 @@ We will continue to maintain this project and may update or reproduce the client
 
 Copyright (c) 2018 zxcpyp, 金修旭, Lab-Zjt
 
-Updated at 2019-03-07
+Updated at 2019-03-15
+
+## Log
+
+2019-02-24: Release version 1.0, a simple version with all basic functions
+
+2019-03-07: Release version 1.2, we have finished all the work so this fantastic tool could be put in practical use.
+
+2019-03-15: Release version 1.4, add password verification
