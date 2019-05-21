@@ -209,21 +209,21 @@ namespace srlib {
     const_pointer Data() const {return _ptr;}
     bool Empty() const {return _size == 0;}
     String ToString() {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       return String(_ptr, _size);
     }
     String ToStringTrunc() {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       return String(_ptr);
     }
     size_type Find(const char *sub) const {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       auto pos = memmem(Data(), Size(), sub, strlen(sub));
       if (pos == nullptr)return size_t(-1);
       return (pointer) pos - Data();
     }
     size_type Find(const void *sub, size_type size) const {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       auto pos = memmem(Data(), Size(), sub, size);
       if (pos == nullptr)return size_t(-1);
       return (pointer) pos - Data();
