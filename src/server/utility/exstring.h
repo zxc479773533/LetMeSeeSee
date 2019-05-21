@@ -2,7 +2,6 @@
 #define UTILITY_NSTR_H
 
 #include <cstring>
-#include <functional>
 #include <string>
 #include <ostream>
 #include <regex>
@@ -625,13 +624,6 @@ namespace srlib {
   typedef BasicString<wchar_t> WString;
   typedef BasicString<char16_t> U16String;
   typedef BasicString<char32_t> U32String;
-};
-
-template<typename CharT>
-struct std::hash<srlib::BasicString<CharT>> {
-  size_t operator()(const srlib::BasicString<CharT> &str) const {
-    return std::hash<std::basic_string<CharT>>()(str.const_std_string());
-  }
 };
 
 inline srlib::BasicString<char> operator "" _s(const char *str, size_t size) {
