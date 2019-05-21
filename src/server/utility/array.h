@@ -148,23 +148,23 @@ namespace srlib {
       return Array(_data + from, to - from);
     }
     size_t Find(const char *sub) {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       auto pos = memmem(Data(), Size(), sub, strlen(sub));
       if (pos == nullptr)return size_t(-1);
       return (char *) pos - Data();
     }
     size_type Find(const void *sub, size_type size) const {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       auto pos = memmem(Data(), Size(), sub, size);
       if (pos == nullptr)return size_t(-1);
       return (pointer) pos - Data();
     }
     String ToString() {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       return String(_data, _size);
     }
     String ToStringTrunc() {
-      static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
+      //static_assert(std::is_same<T, char>::value || std::is_same<T, uint8_t>::value);
       return String(_data);
     }
   };
