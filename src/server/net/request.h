@@ -2,6 +2,7 @@
 #define UTILITY_REQUEST_H
 
 #include "../utility/exstring.h"
+#include <map>
 
 namespace srlib {
   namespace net {
