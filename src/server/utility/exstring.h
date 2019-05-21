@@ -1,6 +1,8 @@
 #ifndef UTILITY_NSTR_H
 #define UTILITY_NSTR_H
 
+#include <cstring>
+#include <functional>
 #include <string>
 #include <ostream>
 #include <regex>
