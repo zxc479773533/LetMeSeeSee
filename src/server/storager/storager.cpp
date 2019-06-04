@@ -28,13 +28,13 @@ namespace lmss {
     Log.Logln("Scan Source Code Begin...");
     // 遍历目录，对目录下的每一个文件进行扫描。
     srlib::OpenDir(path).RecursiveWalk([this](srlib::FileInfo &&info) {
-      std::string reg(R"(^ *Store\(([^)]*)\).*$)");
       for (auto &line:srlib::OpenFile(info.Path()).ReadAll().split("\n")) {
         // 找到包含了Store宏的行。
-        if (line.regex_match(reg)) {
-          auto vec = line.regex_replace(reg, "$1").split(",");
+        line.trim();
+        if (line.has_prefix("Store(")) {
+          auto vec = line(6, line.find(')')).split(",");
           for (auto &v:vec) {
-            v = v.trim();
+            v.trim();
           }
           // json化
           auto json = srlib::String(R"({"node": ")") + vec[0] + "\", " + R"("data": [)";
@@ -46,7 +46,7 @@ namespace lmss {
             }
           }
           json += "]}";
-          _node_list.emplace_back(std::move(json.std_string_copy()));
+          _node_list.emplace_back(json.std_string_copy());
         }
       }
     });
