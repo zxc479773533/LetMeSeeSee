@@ -10,8 +10,9 @@
 #define PYLIB_PYSTRING
 
 #include <string>
+#include <cstring>
 #include <vector>
-#include <regex>
+#include <regex>  
 
 namespace pylib {
   // Here are some useful functions for string operation

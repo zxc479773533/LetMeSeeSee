@@ -22,6 +22,8 @@ You can use our library in your server code to launch a remote service with just
 
 We recommend that you use the `CMAKE` tool of `3.10` or higher and `gcc` of version 7.0 and above to get a better use of the build experience. This does not mean that the tool cannot be used in an environment that does not meet the version requirements, but a low-level compilation tool may cause some unexpected errors in some environments.
 
+**The latest version can be compiled in gcc 4.8.5 environment with some warnings, but it does not affect the use.**
+
 #### Clinet
 
 We recommend to install the `Java 8` environment. Higher versions require manual installation of the `Javafx` package.
@@ -170,3 +172,5 @@ Updated at 2019-03-15
 2019-03-07: Release version 1.2, we have finished all the work so this fantastic tool could be put in practical use.
 
 2019-03-15: Release version 1.4, add password verification
+
+2019-06-09: Release version 1.4.1, remove regex and make it adapt to the build environment of gcc4.8.5.
